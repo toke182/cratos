@@ -1,3 +1,10 @@
+
+
+.DS_Store
+cratos.sublime-project
+cratos.sublime-workspace
+
+
 lib-cov
 *.seed
 *.log
