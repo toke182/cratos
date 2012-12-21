@@ -1,0 +1,518 @@
+	<!doctype html>
+<!--[if lt IE 7 ]> <html class="ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html class="ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class=""> <!--<![endif]-->
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="es-ES" xml:lang="es-ES">
+<head profile="http://gmpg.org/xfn/11"> <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="distribution" content="global" />
+<meta name="language" content="en" /> 
+<meta name="viewport" content="initial-scale=1.0; maximum-scale=1.0; width=device-width"/><title>Nodejs en español -   tutoriales Archive </title>	
+<link rel="shortcut icon" href="http://www.nodejs.es/wp-content/uploads/2012/05/favicom4.png" type="image/x-icon" />
+
+<link rel="stylesheet" href="http://www.nodejs.es/wp-content/themes/response-nodejs-es/core/css/foundation.css" type="text/css" />
+<link rel="stylesheet" href="http://www.nodejs.es/wp-content/themes/response-nodejs-es/core/css/app.css" type="text/css" />
+<link rel="stylesheet" href="http://www.nodejs.es/wp-content/themes/response-nodejs-es/core/css/ie.css" type="text/css" />
+<link rel="stylesheet" href="http://www.nodejs.es/wp-content/themes/response-nodejs-es/css/shortcode.css" type="text/css" />
+<link rel="stylesheet" href="http://www.nodejs.es/wp-content/themes/response-nodejs-es/css/elements.css" type="text/css" />
+<link rel="stylesheet" href="http://www.nodejs.es/wp-content/themes/response-nodejs-es/css/style.css" type="text/css" />
+
+
+<link rel="pingback" href="http://www.nodejs.es/xmlrpc.php" />
+
+<link href='//fonts.googleapis.com/css?family=Arial' rel='stylesheet' type='text/css' /> 
+ <!-- wp_enqueue_script( 'comment-reply' );-->
+
+<script type="text/javascript">
+var TB_pluginPath = 'http://www.nodejs.es/wp-content/plugins/tweet-blender';
+var TB_config = {
+'widget_show_photos':true,
+'widget_show_source':true,
+'widget_show_header':false,
+'general_link_screen_names':false,
+'general_link_hash_tags':false,
+'general_link_urls':true,
+'widget_check_sources':true,
+'widget_show_user':true,
+'general_timestamp_format':false,
+'general_seo_tweets_googleoff':false,
+'general_seo_footer_googleoff':false,
+'widget_show_reply_link':false,
+'widget_show_follow_link':false,
+'archive_show_user':false,
+'archive_show_photos':false,
+'archive_show_source':false,
+'archive_tweets_num':'10',
+'archive_is_disabled':false,
+'archive_show_reply_link':false,
+'archive_show_follow_link':false,
+'archive_auto_page':false,
+'archive_keep_tweets':'0',
+'advanced_reroute_on':false,
+'advanced_show_limit_msg':false,
+'advanced_disable_cache':false,
+'advanced_no_search_api':false,
+'filter_lang':' ',
+'filter_hide_mentions':false,
+'filter_hide_replies':false,
+'filter_location_name':false,
+'filter_location_dist':false,
+'filter_location_dist_units':false,
+'filter_bad_strings':false,
+'filter_limit_per_source':false,
+'filter_limit_per_source_time':'0',
+'filter_hide_same_text':false,
+'filter_hide_not_replies':false
+}</script>
+<link rel="alternate" type="application/rss+xml" title="Nodejs en español &raquo; Feed" href="http://www.nodejs.es/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Nodejs en español &raquo; RSS de los comentarios" href="http://www.nodejs.es/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Nodejs en español &raquo; tutoriales RSS de la categoría" href="http://www.nodejs.es/category/tutoriales/feed/" />
+<link rel='stylesheet' id='wp-github-css'  href='http://www.nodejs.es/wp-content/plugins/wp-github-plugin/wp-github.css?ver=3.4.1' type='text/css' media='all' />
+<link rel='stylesheet' id='jobman-display-css'  href='http://www.nodejs.es/wp-content/plugins/job-manager/css/display.css?ver=0.7.20' type='text/css' media='all' />
+<link rel='stylesheet' id='google-sitemap-StyleSheets-css'  href='http://www.nodejs.es/wp-content/plugins/google-sitemap-plugin/css/stylesheet.css?ver=3.4.1' type='text/css' media='all' />
+<link rel='stylesheet' id='aye_dynamic-css'  href='http://www.nodejs.es/wp-content/plugins/youtube-embed/css/aye-main.css?ver=3.4.1' type='text/css' media='all' />
+<script type='text/javascript' src='http://www.nodejs.es/wp-includes/js/jquery/jquery.js?ver=1.7.2'></script>
+<script type='text/javascript' src='http://www.nodejs.es/wp-content/plugins/wp-github-plugin/wp-github.js?ver=3.4.1'></script>
+<script type='text/javascript' src='http://www.nodejs.es/wp-content/plugins/job-manager/js/display.js?ver=0.7.20'></script>
+<script type='text/javascript' src='http://www.nodejs.es/wp-content/themes/response-nodejs-es/core/library/js/foundation/jquery.orbit.js?ver=3.4.1'></script>
+<script type='text/javascript' src='http://www.nodejs.es/wp-content/themes/response-nodejs-es/core/library/js/foundation/app.js?ver=3.4.1'></script>
+<script type='text/javascript' src='http://www.nodejs.es/wp-content/themes/response-nodejs-es/core/library/js/foundation/jquery.placeholder.min.js?ver=3.4.1'></script>
+<script type='text/javascript' src='http://www.nodejs.es/wp-content/themes/response-nodejs-es/core/library/js/foundation/jquery.reveal.js?ver=3.4.1'></script>
+<script type='text/javascript' src='http://www.nodejs.es/wp-content/themes/response-nodejs-es/core/library/js/foundation/jquery.tooltips.js?ver=3.4.1'></script>
+<script type='text/javascript' src='http://www.nodejs.es/wp-content/themes/response-nodejs-es/core/library/js/foundation/modernizr.foundation.js?ver=3.4.1'></script>
+<script type='text/javascript' src='http://www.nodejs.es/wp-content/themes/response-nodejs-es/core/library/js/menu.js?ver=3.4.1'></script>
+<script type='text/javascript' src='http://www.nodejs.es/wp-content/themes/response-nodejs-es/core/library/js/mobilemenu.js?ver=3.4.1'></script>
+<script type='text/javascript' src='http://www.nodejs.es/wp-content/themes/response-nodejs-es/core/library/js/video.js?ver=3.4.1'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.nodejs.es/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.nodejs.es/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 3.4.1" />
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-341837-29']);
+  _gaq.push(['_setDomainName', 'nodejs.es']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script><style type="text/css">.featured-image {float: left;}</style><style type="text/css">
+
+</style>
+	<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>
+<link type="text/css" media="screen" rel="stylesheet" href="http://www.nodejs.es/wp-content/plugins/tweet-blender/css/tweets.css" />
+ <!-- wp_head();-->
+	
+</head><!-- closing head tag-->
+
+<!--Begin response_after_head_tag hook-->
+		
+	<body style="font-family:'Arial', Helvetica, serif" class="archive category category-tutoriales category-5" > <!--End response_after_head_tag hook-->
+	
+<!--Begin response_before_header hook-->
+	 
+<!--End response_before_header hook-->
+			
+<header>		
+		<div class="container">
+		<div class="row">
+		
+			<div class="seven columns">
+				
+				<!--Begin response_header_sitename hook -->
+						<div id="logo">
+		<a href="http://www.nodejs.es/"><img src="http://www.nodejs.es/wp-content/uploads/2012/05/nodejs-es-logo1.png" alt="logo"></a>
+	</div>  
+				<!--End response_header_sitename hook -->
+			
+				
+			</div>	
+			
+			<div id ="register" class="five columns">
+				
+			<!--Begin response_header_social_icons hook -->
+				
+	<div id="social">
+
+		<div class="icons">
+	
+									<a href="https://twitter.com/#!/nodejs_es" target="_blank" rel="me"><img src="http://www.nodejs.es/wp-content/themes/response-nodejs-es/images/social/default/twitter.png" alt="Twitter" /></a>
+																																	<a href="mailto:info@nodejs.es" target="_blank"><img src="http://www.nodejs.es/wp-content/themes/response-nodejs-es/images/social/default/email.png" alt="E-mail" /></a>
+											<a href="http://www.nodejs.es/feed/" target="_blank"><img src="http://www.nodejs.es/wp-content/themes/response-nodejs-es/images/social/default/rss.png" alt="RSS" /></a>
+			
+		</div><!--end icons--> 
+		
+	</div><!--end social-->  
+			<!-- End response_header_social_icons hook -->	
+				
+			</div>	
+		</div><!--end row-->
+	</div>
+
+		
+	<div class="container container-nav">
+		<div class="row row-nav">
+
+			<div class="twelve columns" id="menu">
+
+			<div id="nav" class="twelve columns">
+		    <div class="menu-header-menu-container"><ul id="nav_menu"><li id="menu-item-119" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-119"><a href="http://api.nodejs.es">API en español</a></li>
+<li id="menu-item-118" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-118"><a href="http://www.nodejs.es/nodeguide/">nodeguide</a></li>
+<li id="menu-item-125" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-125"><a href="http://www.nodejs.es/api-v0-6-18-release/">API v0.6.18-release</a></li>
+</ul></div>   			</div>
+		</div>
+	</div>
+</div>
+ </header>
+
+<!--Begin response_after_header-->
+	 
+<!--End response after_header hook-->
+<div class="container">
+	<div class="row">
+		<!--Begin response_before_content_sidebar hook-->
+							
+		
+			<!--End response_before_content_sidebar hook-->
+		
+		<div id="content" class="eight columns">
+		
+				
+		<!--Begin response_before_archive hook-->
+					<!--End response_before_archive hook-->
+		
+				
+		<div class="post_container">
+			<div class="post-154 post type-post status-publish format-standard hentry category-tutoriales tag-componentjs tag-expressjs" id="post-154">
+		
+			<!--Begin response_loop hook-->
+						
+					
+						<div class="postformats"><!--begin format icon-->
+				<img src="http://www.nodejs.es/wp-content/themes/response-nodejs-es/images/formats/default.png" alt="formats" />
+			</div><!--end format-icon-->
+							<h2 class="posts_title"><a href="http://www.nodejs.es/meetup-express-js/">Meetup de ExpressJS</a></h2>
+					<!--begin response_post_byline hook-->
+							
+	<div class="meta">
+		 Publicado en <a href="http://www.nodejs.es/meetup-express-js/">30 octubre, 2012</a>,		por <a href="http://www.nodejs.es/author/retrofox/" title="Entradas de retrofox" rel="author">retrofox</a>  
+		en <a href="http://www.nodejs.es/category/tutoriales/" title="Ver todas las entradas en tutoriales" rel="category tag">tutoriales</a>.		
+	</div> 					<!--end response_post_byline hook-->
+					
+				<div class="entry" >
+					<p>Hace unos días @dzajdband  realizó un Meetup donde hizo una muy buena introducción a expressjs y muchas cosas más. Muy buen material, claro, didáctico y sobre todo en español.</p>
+				</div><!--end entry-->
+	
+					<!--End response_loop hook-->
+			
+				<!--Begin response_post_tags hook-->
+					
+		<div class="tags">
+			Etiquetas:<a href="http://www.nodejs.es/tag/componentjs/" rel="tag">componentjs</a>, <a href="http://www.nodejs.es/tag/expressjs/" rel="tag">expressjs</a><br />		
+	</div><!--end tags--> 
+					<!--End response_post_tags hook-->
+			
+			</div><!--end post_class-->
+			
+			<!--Begin response_post_bar hook-->
+					
+	<div id="comments">
+	<a href="http://www.nodejs.es/meetup-express-js/#respond" title="Comentarios en Meetup de ExpressJS">No hay Comentarios</a>.	</div>
+				<!--End response_post_bar hook-->
+			
+		</div><!--end post container--> 
+
+		 		
+		<div class="post_container">
+			<div class="post-128 post type-post status-publish format-standard hentry category-buenas-practicas category-tutoriales" id="post-128">
+		
+			<!--Begin response_loop hook-->
+						
+					
+						<div class="postformats"><!--begin format icon-->
+				<img src="http://www.nodejs.es/wp-content/themes/response-nodejs-es/images/formats/default.png" alt="formats" />
+			</div><!--end format-icon-->
+							<h2 class="posts_title"><a href="http://www.nodejs.es/git-extras/">git-extras</a></h2>
+					<!--begin response_post_byline hook-->
+							
+	<div class="meta">
+		 Publicado en <a href="http://www.nodejs.es/git-extras/">6 junio, 2012</a>,		por <a href="http://www.nodejs.es/author/retrofox/" title="Entradas de retrofox" rel="author">retrofox</a>  
+		en <a href="http://www.nodejs.es/category/buenas-practicas/" title="Ver todas las entradas en buenas prácticas" rel="category tag">buenas prácticas</a>, <a href="http://www.nodejs.es/category/tutoriales/" title="Ver todas las entradas en tutoriales" rel="category tag">tutoriales</a>.		
+	</div> 					<!--end response_post_byline hook-->
+					
+				<div class="entry" >
+					<p>Git se ha transformado en uno de los sistemas de control de versiones más utilizados (por no decir el más utilizado) y por su lado GitHub en el servidor web con soporte git por excelencia. Es impresionante la cantidad de proyectos que se suman día a día y como de alguna manera esto ha modificado el<a href="http://www.nodejs.es/git-extras/"> </p>
+<p> (More)…</a></p>
+				</div><!--end entry-->
+	
+					<!--End response_loop hook-->
+			
+				<!--Begin response_post_tags hook-->
+					
+					<!--End response_post_tags hook-->
+			
+			</div><!--end post_class-->
+			
+			<!--Begin response_post_bar hook-->
+					
+	<div id="comments">
+	<a href="http://www.nodejs.es/git-extras/#respond" title="Comentarios en git-extras">No hay Comentarios</a>.	</div>
+				<!--End response_post_bar hook-->
+			
+		</div><!--end post container--> 
+
+		 		
+		<div class="post_container">
+			<div class="post-72 post type-post status-publish format-standard hentry category-documentacion category-tutoriales" id="post-72">
+		
+			<!--Begin response_loop hook-->
+						
+					
+						<div class="postformats"><!--begin format icon-->
+				<img src="http://www.nodejs.es/wp-content/themes/response-nodejs-es/images/formats/default.png" alt="formats" />
+			</div><!--end format-icon-->
+							<h2 class="posts_title"><a href="http://www.nodejs.es/nodebeginner/">Nodebeginner</a></h2>
+					<!--begin response_post_byline hook-->
+							
+	<div class="meta">
+		 Publicado en <a href="http://www.nodejs.es/nodebeginner/">26 mayo, 2012</a>,		por <a href="http://www.nodejs.es/author/retrofox/" title="Entradas de retrofox" rel="author">retrofox</a>  
+		en <a href="http://www.nodejs.es/category/documentacion/" title="Ver todas las entradas en documentacion" rel="category tag">documentacion</a>, <a href="http://www.nodejs.es/category/tutoriales/" title="Ver todas las entradas en tutoriales" rel="category tag">tutoriales</a>.		
+	</div> 					<!--end response_post_byline hook-->
+					
+				<div class="entry" >
+					<p>@hernanjungle hace un tiempo ha traducido &#8220;El libro para principiantes de Node.js&#8220;. Sobre el Tutorial El objetivo de este documento es ayudarte a empezar con el desarrollo de aplicaciones para Node.js, enseñándote todo lo que necesites saber acerca de JavaScript &#8220;avanzado&#8221; sobre la marcha. Este tutorial va mucho más allá del típico manual &#8220;Hola Mundo&#8221;.<a href="http://www.nodejs.es/nodebeginner/"> </p>
+<p> (More)…</a></p>
+				</div><!--end entry-->
+	
+					<!--End response_loop hook-->
+			
+				<!--Begin response_post_tags hook-->
+					
+					<!--End response_post_tags hook-->
+			
+			</div><!--end post_class-->
+			
+			<!--Begin response_post_bar hook-->
+					
+	<div id="comments">
+	<a href="http://www.nodejs.es/nodebeginner/#comments" title="Comentarios en Nodebeginner">1 Comentario</a>.	</div>
+				<!--End response_post_bar hook-->
+			
+		</div><!--end post container--> 
+
+		 		
+		<div class="post_container">
+			<div class="post-30 post type-post status-publish format-standard hentry category-tutoriales tag-expressjs" id="post-30">
+		
+			<!--Begin response_loop hook-->
+						
+					
+						<div class="postformats"><!--begin format icon-->
+				<img src="http://www.nodejs.es/wp-content/themes/response-nodejs-es/images/formats/default.png" alt="formats" />
+			</div><!--end format-icon-->
+							<h2 class="posts_title"><a href="http://www.nodejs.es/empezando-con-expressjs/">Empezando con ExpressJS</a></h2>
+					<!--begin response_post_byline hook-->
+							
+	<div class="meta">
+		 Publicado en <a href="http://www.nodejs.es/empezando-con-expressjs/">25 mayo, 2012</a>,		por <a href="http://www.nodejs.es/author/zajdband/" title="Entradas de zajdband" rel="author">zajdband</a>  
+		en <a href="http://www.nodejs.es/category/tutoriales/" title="Ver todas las entradas en tutoriales" rel="category tag">tutoriales</a>.		
+	</div> 					<!--end response_post_byline hook-->
+					
+				<div class="entry" >
+					<p>Como dicen los Beatles, siempre es más fácil con una &#8220;Pequeña ayuda de mis amigos&#8221;. En esta oprtunidad la ayuda nos la da TJ Holowaychuk. Empezar una aplicación web con el excelente framework ExpressJS desde la terminal es mucho más simple de lo que seguramente imaginan.</p>
+				</div><!--end entry-->
+	
+					<!--End response_loop hook-->
+			
+				<!--Begin response_post_tags hook-->
+					
+		<div class="tags">
+			Etiquetas:<a href="http://www.nodejs.es/tag/expressjs/" rel="tag">expressjs</a><br />		
+	</div><!--end tags--> 
+					<!--End response_post_tags hook-->
+			
+			</div><!--end post_class-->
+			
+			<!--Begin response_post_bar hook-->
+					
+	<div id="comments">
+	<a href="http://www.nodejs.es/empezando-con-expressjs/#comments" title="Comentarios en Empezando con ExpressJS">3 Comentarios</a>.	</div>
+				<!--End response_post_bar hook-->
+			
+		</div><!--end post container--> 
+
+		 	 
+	 
+		<!--Begin response_pagination hook-->
+					<!--End response_pagination hook-->
+		
+		<!--Begin response_after_archive hook-->
+					<!--End response_after_archive hook-->
+	
+		</div><!--end content_padding-->
+
+		<!--Begin response_after_content_sidebar hook-->
+				
+		<div id="sidebar" class="four columns">
+		<div id="google-groups-plugin-2" class="widget-container"><link rel="stylesheet" href="http://www.nodejs.es/wp-content/plugins/google-groups-plugin/google-groups.css" type="text/css" media="screen" />
+    <div id="google-groups-wrap">
+      <div class="gimage">
+       
+        <h2 class="title">
+          <a target="_blank" href="http://groups.google.com/group/nodejs-es">
+          NodeJS en español          </a>
+        </h2>
+            </div>
+
+      <div id="google-groups-feeds"
+      <ul><li><a href="http://groups.google.com/group/nodejs-es/browse_thread/thread/4c1612be312389d3/0c5a7b1b01f4ba40?show_docid=0c5a7b1b01f4ba40" title="
+  Hola,  Si quieres te pongo un caso práctico de como lo haría yo, y si tienes alguna duda me lo puedes ir comentando:  var oDb = require( &#039;./db&#039; );  var EntidadAbstracta = function( oObj )  {  this.nId = oObj.nId;  ...  ...  EntidadAbstracta.TABLA = null;  EntidadAbstracta.prototype.bus carPorId = function( id, callback )
+  ">Re: [nodejs-es:233] ¿Como armar una Jerarquía de OO?</a></li><li><a href="http://groups.google.com/group/nodejs-es/browse_thread/thread/4c1612be312389d3/6f6b9aff6bac01b6?show_docid=6f6b9aff6bac01b6" title="
+  yo prefiero:  module.exports = EntidadAbstracta  EntidadAbstracta = require(&#039;/EntidadAbstracta.js&#039; )  y poner solo una clase por modulo, salvo para el index del package o de un  directorio... si es que tiene sentido hacerlo.  Por lo general no hago muchas clases y herencia de este tipo en javascript,
+  ">Re: [nodejs-es:233] ¿Como armar una Jerarquía de OO?</a></li><li><a href="http://groups.google.com/group/nodejs-es/browse_thread/thread/4c1612be312389d3/edde6614b8c1aa5f?show_docid=edde6614b8c1aa5f" title="
+  Hola, soy nuevo con esto de nodejs,y lo estoy usando a través de Express.  Estaba queriendo armar algo (usando Express) donde la bd MySQL la manejo  manualmente (sin ORM), y por lo tanto me veo en la necesidad de armar una  jerarquía de OO, básicamente para ahorrar código relativo a ella.
+  ">¿Como armar una Jerarquía de OO?</a></li><li><a href="http://groups.google.com/group/nodejs-es/browse_thread/thread/7ea7f00d03409fc3/308197fe203dfd08?show_docid=308197fe203dfd08" title="
+  Java o Javascript? da igual? ponganse de acuerdo...  2012/11/29 Werben Capital Humano &lt;r...@werbencapitalhumano.com. ar&gt;
+  ">Re: [JS Ar] Re: [OT] workshopba fotos y material</a></li><li><a href="http://groups.google.com/group/nodejs-es/browse_thread/thread/7ea7f00d03409fc3/08f8135563032dc3?show_docid=08f8135563032dc3" title="
+  Excelente  Los felicito.  Saludos desde Lima  FG  ----- Original Message -----  From: José F. Romaniello  To: nodejs-es@googlegroups.com ; NodeJS-Argentina-l...@meetup.c om ; AltNet-Hispano ; altnet-argentina@googlegroups. com ; javascript-arg@googlegroups.co m  Sent: Tuesday, November 06, 2012 10:58 AM
+  ">Re: [nodejs-es:230] [OT] workshopba fotos y material</a></li><li><a href="http://groups.google.com/group/nodejs-es/browse_thread/thread/7ea7f00d03409fc3/347a8bb87adb04a6?show_docid=347a8bb87adb04a6" title="
+  Hola, perdón por el OT. Les quería comentar que junto con Damian y Matías  llevamos a cabo el viernes pasado el workshop de node.js que veníamos  planificando.  En la página del workshop van a encontrar fotos del evento:  [link]  Dejamos todo el material, ejercicios y ppts público para que cualquiera lo
+  ">[OT] workshopba fotos y material</a></li><li><a href="http://groups.google.com/group/nodejs-es/browse_thread/thread/90a753fcab7b44db/2db737cd63bca603?show_docid=2db737cd63bca603" title="
+  Invitamos a todos los que esten cerca de Buenos Aires al segundo Meetup&lt;[link]&gt;  .  Hay una charla de Express que va a dar Dan Zajdband, y luego vamos a  trabajar en los tracks que tenemos en el dashboard.&lt;[link]&gt;
+  ">Meetup de Node.JS en Buenos Aires</a></li></ul>      </div>
+
+      <form action="http://groups.google.com/group/nodejs-es/boxsubscribe" id="google-subscribe">
+        <div id="google-subscribe-input">
+          <label>Email:&nbsp;
+            <input type="text" name="email" id="google-subscribe-email" />
+            <input type="submit" name="go" value="Subscribirse" />
+          </label>
+        </div>
+      </form>
+    </div>
+
+  </div>
+  <div id="recent-comments-2" class="widget-container"><h2 class="widget-title">Comentarios recientes</h2><ul id="recentcomments"><li class="recentcomments">hjoaco en <a href="http://www.nodejs.es/api-v0-6-18-release/#comment-1393">API v0.6.18-release</a></li><li class="recentcomments"><a href='http://jonatanariste.com.ar' rel='external nofollow' class='url'>Jonatan Airste</a> en <a href="http://www.nodejs.es/nodebeginner/#comment-1011">Nodebeginner</a></li><li class="recentcomments">retrofox en <a href="http://www.nodejs.es/hola-mundo/#comment-111">¡Hola mundo cruel!</a></li><li class="recentcomments"><a href='http://wiserlander.sytes.net' rel='external nofollow' class='url'>wiserlander</a> en <a href="http://www.nodejs.es/hola-mundo/#comment-106">¡Hola mundo cruel!</a></li><li class="recentcomments">cesar toledo en <a href="http://www.nodejs.es/nodeguide/#comment-61">nodeguide</a></li></ul></div><div id="tweetblender-2" class="widget-container"><h2 class="widget-title">Twitteando &#8230;</h2><form id="tweetblender-2-f" class="tb-widget-configuration" action="#"><div><input type="hidden" name="sources" value="#nodejs-es,,nodejs-es,,jsconfar" /><input type="hidden" name="refreshRate" value="120" /><input type="hidden" name="tweetsNum" value="6" /><input type="hidden" name="viewMoreText" value="view more" /><input type="hidden" name="viewMoreUrl" value="" /></div></form><div id="tweetblender-2-mc"><div class="tb_tweetlist"><div class="tb_tweet" id="t-1354584111000-mrazzari-275771862989017089"><a class="tb_photo" rel="nofollow" href="http://twitter.com/mrazzari"><img src="http://a0.twimg.com/profile_images/553311655/myself_msn_normal.jpg" alt="mrazzari" /></a><span class="tb_author"><a rel="nofollow" href="http://twitter.com/mrazzari">mrazzari</a>: </span> <span class="tb_msg">La gente se queja porque es gratis. Visto en un baño en la @jsconfar. Igual es gracioso. <a rel="nofollow" href="http://t.co/OFqBtULu">http://t.co/OFqBtULu</a></span><br/> <span class="tb_tweet-info"><a rel="nofollow" href="http://twitter.com/mrazzari/statuses/275771862989017089">2 weeks ago</a> from <a href="http://twitter.com/download/android">Twitter for Android</a></span></div>
+<div class="tb_tweet" id="t-1353932202000-jfroma-273037562199814144"><a class="tb_photo" rel="nofollow" href="http://twitter.com/jfroma"><img src="http://a0.twimg.com/profile_images/1152169901/avatar_normal.png" alt="jfroma" /></a><span class="tb_author"><a rel="nofollow" href="http://twitter.com/jfroma">jfroma</a>: </span> <span class="tb_msg">@dscape You should come for jsconfar we will take care of the meat /cc @rauchg</span><br/> <span class="tb_tweet-info"><a rel="nofollow" href="http://twitter.com/jfroma/statuses/273037562199814144">4 weeks ago</a> from <a href="http://www.metrotwit.com/">MetroTwit</a></span></div>
+<div class="tb_tweet" id="t-1353164487000-peregrinogris-269817533903810560"><a class="tb_photo" rel="nofollow" href="http://twitter.com/peregrinogris"><img src="http://a0.twimg.com/profile_images/2042411934/glugcen_2012_normal.jpg" alt="peregrinogris" /></a><span class="tb_author"><a rel="nofollow" href="http://twitter.com/peregrinogris">peregrinogris</a>: </span> <span class="tb_msg">Another amazing use for the JSconfAR swag bag :D <a rel="nofollow" href="http://t.co/DfsD6YP0">http://t.co/DfsD6YP0</a></span><br/> <span class="tb_tweet-info"><a rel="nofollow" href="http://twitter.com/peregrinogris/statuses/269817533903810560">1 month ago</a> from <a href="http://instagr.am">Instagram</a></span></div>
+<div class="tb_tweet" id="t-1352507810000-dzajdband-267063230877274113"><a class="tb_photo" rel="nofollow" href="http://twitter.com/dzajdband"><img src="http://a0.twimg.com/profile_images/2819478786/f268010aefff1106beea24e226b21f5f_normal.jpeg" alt="dzajdband" /></a><span class="tb_author"><a rel="nofollow" href="http://twitter.com/dzajdband">dzajdband</a>: </span> <span class="tb_msg">@ignacioricci @jsconfar</span><br/> <span class="tb_tweet-info"><a rel="nofollow" href="http://twitter.com/dzajdband/statuses/267063230877274113">1 month ago</a> from <a href="http://twitter.com/">web</a></span></div>
+<div class="tb_tweet" id="t-1351970053000-leJDen-264807714272735232"><a class="tb_photo" rel="nofollow" href="http://twitter.com/leJDen"><img src="http://a0.twimg.com/profile_images/2642769559/536a293a5303acb88c8503438a1e2759_normal.jpeg" alt="leJDen" /></a><span class="tb_author"><a rel="nofollow" href="http://twitter.com/leJDen">leJDen</a>: </span> <span class="tb_msg">@jsconfar hay otro conf programado para 2013?</span><br/> <span class="tb_tweet-info"><a rel="nofollow" href="http://twitter.com/leJDen/statuses/264807714272735232">2 months ago</a> from <a href="http://itunes.apple.com/us/app/twitter/id409789998?mt=12">Twitter for Mac</a></span></div>
+<div class="tb_tweet" id="t-1351969122000-leJDen-264803807249174528"><a class="tb_photo" rel="nofollow" href="http://twitter.com/leJDen"><img src="http://a0.twimg.com/profile_images/2642769559/536a293a5303acb88c8503438a1e2759_normal.jpeg" alt="leJDen" /></a><span class="tb_author"><a rel="nofollow" href="http://twitter.com/leJDen">leJDen</a>: </span> <span class="tb_msg">Note to self: go to the next @JSConfAR. It would be like going to @hujsconf, but I would understand the language.</span><br/> <span class="tb_tweet-info"><a rel="nofollow" href="http://twitter.com/leJDen/statuses/264803807249174528">2 months ago</a> from <a href="http://itunes.apple.com/us/app/twitter/id409789998?mt=12">Twitter for Mac</a></span></div>
+</div><div class="tb_footer"></div></div></div>
+    <div class="widget-container wp-github-widget" data-user="nodejs-es" data-repo="api" data-plugin-path="http://www.nodejs.es/wp-content/plugins/wp-github-plugin">
+              <h3 class="wp-widget-section-title">Repository</h3>
+        <div class="repository-placeholder"></div>
+              <h3 class="wp-widget-section-title">Contributors</h3>
+        <div class="contributors-placeholder"></div>
+      
+    </div>  
+    <div class="widget-container wp-github-widget" data-user="nodejs-es" data-repo="nodeguide.com" data-plugin-path="http://www.nodejs.es/wp-content/plugins/wp-github-plugin">
+              <h3 class="wp-widget-section-title">Repository</h3>
+        <div class="repository-placeholder"></div>
+              <h3 class="wp-widget-section-title">Contributors</h3>
+        <div class="contributors-placeholder"></div>
+      
+    </div>  <div id="linkcat-14" class="widget-container"><h2 class="widget-title">Recursos en español</h2>
+	<ul class='xoxo blogroll'>
+<li><a href="http://blog.ipseitycloud.com/" title="ipseitycloud.com">ipseitycloud.com</a></li>
+<li><a href="http://www.nodebeginner.org/index-es.html" title="Nodebeginner.org">Nodebeginner.org</a></li>
+<li><a href="http://www.nodehispano.com/" title="Node.js – JavaScript en el Servidor – Comunidad en Español">Nodehispano</a></li>
+
+	</ul>
+</div>
+		<div id="recent-posts-2" class="widget-container">		<h2 class="widget-title">Entradas recientes</h2>		<ul>
+				<li><a href="http://www.nodejs.es/meetup-express-js/" title="Meetup de ExpressJS">Meetup de ExpressJS</a></li>
+				<li><a href="http://www.nodejs.es/primeros-videos-de-jsconfar/" title="Primeros videos de jsconfar">Primeros videos de jsconfar</a></li>
+				<li><a href="http://www.nodejs.es/git-extras/" title="git-extras">git-extras</a></li>
+				<li><a href="http://www.nodejs.es/ngen/" title="ngen">ngen</a></li>
+				<li><a href="http://www.nodejs.es/nodebeginner/" title="Nodebeginner">Nodebeginner</a></li>
+				</ul>
+		</div><div id="categories-2" class="widget-container"><h2 class="widget-title">Categorías</h2>		<ul>
+	<li class="cat-item cat-item-17"><a href="http://www.nodejs.es/category/buenas-practicas/" title="Ver todas las entradas archivadas en buenas prácticas">buenas prácticas</a>
+</li>
+	<li class="cat-item cat-item-4"><a href="http://www.nodejs.es/category/documentacion/" title="Ver todas las entradas archivadas en documentacion">documentacion</a>
+</li>
+	<li class="cat-item cat-item-9"><a href="http://www.nodejs.es/category/eventos/" title="Ver todas las entradas archivadas en eventos">eventos</a>
+</li>
+	<li class="cat-item cat-item-3"><a href="http://www.nodejs.es/category/mundo-cruel/" title="Ver todas las entradas archivadas en mundo-cruel">mundo-cruel</a>
+</li>
+	<li class="cat-item cat-item-1"><a href="http://www.nodejs.es/category/sin-categoria/" title="Ver todas las entradas archivadas en Sin categoría">Sin categoría</a>
+</li>
+	<li class="cat-item cat-item-15"><a href="http://www.nodejs.es/category/tutoreiales/" title="Ver todas las entradas archivadas en tutoreiales">tutoreiales</a>
+</li>
+	<li class="cat-item cat-item-5 current-cat"><a href="http://www.nodejs.es/category/tutoriales/" title="Ver todas las entradas archivadas en tutoriales">tutoriales</a>
+</li>
+		</ul>
+</div>	</div>
+		
+	 
+	
+	 		<!--End response_after_content_sidebar hook-->
+	
+		</div><!--end content-->
+	</div><!--end row-->
+	
+	<div class="row"><div id="crumbs" class="twelve columns"><div class="crumbs_text"><a href="http://www.nodejs.es">Home</a> <img src='http://www.nodejs.es/wp-content/themes/response-nodejs-es/images/breadcrumb-arrow.png'> <span class="current">Archive for category "tutoriales"</span></div></div></div>	
+</div><!--end container-->
+
+	
+	
+
+</div><!--end container wrap-->
+
+    <div id="footer" class="container">
+     		<div class="row" id="footer_container">
+    			<div id="footer_wrap">	
+					<!--Begin response_footer hook-->
+						<div class="three columns footer-widgets"><h3 class="footer-widget-title">Acerca de nodejs.es</h3>			<div class="textwidget"><p>NodeJS.es tiene como objetivo ser un punto de encuentro para todos los usuarios de habla hispana que esten interesados en el mundo nodejs, brindando recursos e intentar dar nuestro apoyo siempre en pos del crecimiento de nuestra comunidad.</p></div>
+		</div><div class="three columns footer-widgets"><h3 class="footer-widget-title">Sitio Oficial</h3>
+	<ul class='xoxo blogroll'>
+<li><a href="http://www.nodejs.org/api" title="Documentacion" target="_blank">Documentación</a></li>
+<li><a href="http://github.com/joyent/node" target="_blank">Fork you on github</a></li>
+<li><a href="http://www.nodejs.org" title="Homepage del sitio oficial de NodeJS" target="_blank">Homepage</a></li>
+
+	</ul>
+</div>
+<div class="three columns footer-widgets"><h3 class="footer-widget-title">Trabajos recientes</h3><ul><li><a href="http://www.nodejs.es/trabajos/web-developer/">Web developer</a></li><li><a href="http://www.nodejs.es/trabajos/senior-javascript-developer/">Senior JavaScript Developer</a></li></ul></div><div class='clear'></div> 					<!--End response_footer hook-->
+				</div>
+		
+			</div><!--end footer_wrap-->
+	</div><!--end footer-->
+</div> 
+
+
+	<div id="afterfooter" class="container">
+		<div class="row" id="afterfooterwrap">	
+		<!--Begin response_secondary_footer hook-->
+					
+		<div id="credit" class="six columns">
+			<a href="http://cyberchimps.com/" target="_blank"><img src="http://www.nodejs.es/wp-content/themes/response-nodejs-es/images/achimps.png" alt="credit" /></a>
+		</div> 
+	
+<div id='afterfootercopyright' class='six columns'>&copy; Nodejs en español</div>		<!--End response_secondary_footer hook-->
+				
+		</div> <!--end afterfooter-->	
+	</div> 	
+		
+	<script type='text/javascript' src='http://www.nodejs.es/wp-includes/js/jquery/ui/jquery.ui.core.min.js?ver=1.8.20'></script>
+<script type='text/javascript' src='http://www.nodejs.es/wp-includes/js/jquery/ui/jquery.ui.datepicker.min.js?ver=1.8.20'></script>
+<script type='text/javascript' src='http://www.nodejs.es/wp-content/plugins/tweet-blender/js/jquery.json-2.2.min.js?ver=3.4.1'></script>
+<script type='text/javascript' src='http://www.nodejs.es/wp-content/plugins/tweet-blender/js/jquery.jsonp-2.1.4.min.js?ver=3.4.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var TB_labels = {"no_config":"No configuration settings found","twitter_logo":"Twitter Logo","kino":"Development by Kirill Novitchenko","refresh":"Refresh","no_sources":"Twitter sources to blend are not defined","no_global_config":"Cannot retrieve Tweet Blender configuration options","version_msg":"Powered by Tweet Blender plugin v{0} blending {1}","limit_msg":"You reached Twitter API connection limit","no_tweets_msg":"No tweets found for {0}","loading_msg":"Loading tweets...","time_past":"{0} {1} ago","time_future":"in {0} {1}","second":"second","seconds":"seconds","minute":"minute","minutes":"minutes","hour":"hour","hours":"hours","day":"day","days":"days","week":"week","weeks":"weeks","month":"month","months":"months","year":"year","years":"years","check_fail":"Check failed","limit_num":"Max is {0}\/hour","limit_left":"You have {0} left","from":"from","reply":"reply","follow":"follow","limit_reset":"Next reset","view_more":"view more"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.nodejs.es/wp-content/plugins/tweet-blender/js/lib.js?ver=3.4.1'></script>
+<script type='text/javascript' src='http://www.nodejs.es/wp-content/plugins/tweet-blender/js/main.js?ver=3.4.1'></script>
+<script type='text/javascript' src='http://www.nodejs.es/wp-includes/js/jquery/ui/jquery.ui.widget.min.js?ver=1.8.20'></script>
+<script type='text/javascript' src='http://www.nodejs.es/wp-includes/js/jquery/ui/jquery.ui.tabs.min.js?ver=1.8.20'></script>
+	
+</body>
+
+</html>

@@ -1,0 +1,581 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Update &mdash; MongoDB Manual</title>
+
+    <link rel="shortcut icon" href="http://media.mongodb.org/favicon.ico" />
+    <meta name="robots" content="index" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="canonical" href="http://docs.mongodb.org/master/applications/update" />
+
+    
+    
+    <link rel="stylesheet" href="../../_static/mongodb-docs.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.2.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <link rel="search" type="application/opensearchdescription+xml" href="http://docs.mongodb.org/osd.xml" title="MongoDB Help"/>
+<link rel="author" title="About these documents" href="../../about/" />
+<link rel="top" title="MongoDB Manual" href="../../" />
+<link rel="up" title="CRUD" href="../../crud/" />
+<link rel="next" title="Delete" href="../delete/" />
+<link rel="prev" title="Read" href="../read/" />
+<!-- Put the following javascript before the closing </head> tag. -->
+<script>
+  (function() {
+    var cx = '017213726194841070573:WMX6838984';
+    var gcse = document.createElement('script'); gcse.type = 'text/javascript'; gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+  </head>
+  <body>
+<div id="top-right">
+        <div class="user-right">
+                <ul id="header-menu-bar" class="ajs-menu-bar">
+                <li class="normal"><a target="_blank" href="http://groups.google.com/group/mongodb-user">Forums</a></li>
+                <li class="normal"><a target="_blank" href="http://blog.mongodb.org/">Blog</a></li>
+                <li class="normal"><a href="http://www.mongodb.org/downloads">Download</a></li>
+                <li class="normal"><a href="http://www.mongodb.org/display/DOCS/Drivers">Drivers</a></li>
+                <li class="normal"><a href="http://www.mongodb.org/display/DOCS/Events">Events</a></li>
+                <li class="normal last"><a class="last" href="http://www.mongodb.org/display/DOCS/International+Documentation">International</a></li>
+                </ul>
+        </div>
+</div>
+<div id="header-db" class="spread">
+        <div class="split">
+                <div id="logo">
+                        <div><a href="../../"><img src="../../_static/logo-mongodb.png" width="190" height="55" alt="mongoDB" /></a></div>
+                </div>
+        </div>
+<div class="search-db"><gcse:searchbox></gcse:searchbox></div>
+<div id="etp">
+<ul>
+<li><a href="https://github.com/mongodb/docs/blob/master/source/applications/update.txt" target="_blank" title="Edit applications/update.txt on github">Edit this Page</a></li>
+<li><a href="http://github.com/mongodb/docs" target="_blank" title="Fork the documentation on GitHub and contribute.">GitHub</a></li>
+<li><a href="https://jira.mongodb.org/secure/CreateIssueDetails!init.jspa?pid=10380&issuetype=4&priority=4&summary=Comment+on%3a+%22applications/update%2Etxt%22" target="_blank" title="Report a problem with applications/update.txt on Jira">Report a problem</a></li>
+</ul>
+</div>
+</div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            <div id="cse-results"><gcse:searchresults></gcse:searchresults></div>
+            
+  <div class="section" id="update">
+<h1>Update<a class="headerlink" href="#update" title="Permalink to this headline">¶</a></h1>
+<p>Of the four basic database operations (i.e. CRUD), <em>update</em> operations
+are those that modify existing records or <a class="reference internal" href="../../reference/glossary/#term-document"><em class="xref std std-term">documents</em></a>
+in a MongoDB <a class="reference internal" href="../../reference/glossary/#term-collection"><em class="xref std std-term">collection</em></a>. For general information about write
+operations and the factors that affect their performance, see
+<a class="reference internal" href="../../core/write-operations/"><em>Write Operations</em></a>; for documentation of other CRUD
+operations, see the <a class="reference internal" href="../../crud/"><em>CRUD</em></a> page.</p>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Update operation modifies an existing <a class="reference internal" href="../../reference/glossary/#term-document"><em class="xref std std-term">document</em></a> or
+documents in a <a class="reference internal" href="../../reference/glossary/#term-collection"><em class="xref std std-term">collection</em></a>. MongoDB provides the following
+methods to perform update operations:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#crud-update-update"><em>update</em></a></li>
+<li><a class="reference internal" href="#crud-update-save"><em>save</em></a></li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Consider the following behaviors of MongoDB&#8217;s update
+operations.</p>
+<ul class="last">
+<li><p class="first">When performing update operations that increase the document size
+beyond the allocated space for that document, the update operation
+relocates the document on disk and may reorder the document fields
+depending on the type of update.</p>
+</li>
+<li><p class="first">As of these <a class="reference internal" href="../../release-notes/drivers-write-concern/#write-concern-change-releases"><em>driver versions</em></a>, all
+write operations will issue a <a class="reference internal" href="../../reference/commands/#getLastError" title="getLastError"><tt class="xref mongodb mongodb-dbcommand docutils literal"><span class="pre">getLastError</span></tt></a> command to
+confirm the result of the write operation:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span> <span class="nx">getLastError</span><span class="o">:</span> <span class="mi">1</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>Refer to the documentation on <a class="reference internal" href="../../core/write-operations/#write-operations-write-concern"><em>write concern</em></a> in the <a class="reference internal" href="../../core/write-operations/"><em>Write Operations</em></a>
+document for more information.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="crud-update-update">
+<span id="id1"></span><h2>Update<a class="headerlink" href="#crud-update-update" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="../../reference/method/db.collection.update/#db.collection.update" title="db.collection.update"><tt class="xref mongodb mongodb-method docutils literal"><span class="pre">update()</span></tt></a> method is the primary
+method used to modify documents in a MongoDB collection. By default,
+the <a class="reference internal" href="../../reference/method/db.collection.update/#db.collection.update" title="db.collection.update"><tt class="xref mongodb mongodb-method docutils literal"><span class="pre">update()</span></tt></a> method updates a
+<strong>single</strong> document, but by using the <tt class="docutils literal"><span class="pre">multi</span></tt> option,
+<a class="reference internal" href="../../reference/method/db.collection.update/#db.collection.update" title="db.collection.update"><tt class="xref mongodb mongodb-method docutils literal"><span class="pre">update()</span></tt></a> can update all documents
+that match the query criteria in the collection. The <a class="reference internal" href="../../reference/method/db.collection.update/#db.collection.update" title="db.collection.update"><tt class="xref mongodb mongodb-method docutils literal"><span class="pre">update()</span></tt></a> method can either replace the existing
+document with the new document or update specific fields in the
+existing document.</p>
+<p>The <a class="reference internal" href="../../reference/method/db.collection.update/#db.collection.update" title="db.collection.update"><tt class="xref mongodb mongodb-method docutils literal"><span class="pre">update()</span></tt></a> has the following
+syntax:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">db</span><span class="p">.</span><span class="nx">collection</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span> <span class="o">&lt;</span><span class="nx">query</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="nx">update</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="nx">options</span><span class="o">&gt;</span> <span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition-corresponding-operation-in-sql admonition">
+<p class="first admonition-title">Corresponding operation in SQL</p>
+<p>The <a class="reference internal" href="../../reference/method/db.collection.update/#db.collection.update" title="db.collection.update"><tt class="xref mongodb mongodb-method docutils literal"><span class="pre">update()</span></tt></a> method corresponds
+to the <tt class="docutils literal"><span class="pre">UPDATE</span></tt> operation in SQL, and:</p>
+<ul class="simple">
+<li>the <tt class="docutils literal"><span class="pre">&lt;query&gt;</span></tt> argument corresponds to the <tt class="docutils literal"><span class="pre">WHERE</span></tt> statement,
+and</li>
+<li>the <tt class="docutils literal"><span class="pre">&lt;update&gt;</span></tt> corresponds to the <tt class="docutils literal"><span class="pre">SET</span> <span class="pre">...</span></tt> statement.</li>
+</ul>
+<p class="last">The default behavior of the <a class="reference internal" href="../../reference/method/db.collection.update/#db.collection.update" title="db.collection.update"><tt class="xref mongodb mongodb-method docutils literal"><span class="pre">update()</span></tt></a> method updates a <strong>single</strong> document and
+would correspond to the SQL <tt class="docutils literal"><span class="pre">UPDATE</span></tt> statement with the <tt class="docutils literal"><span class="pre">LIMIT</span>
+<span class="pre">1</span></tt>. With the <tt class="docutils literal"><span class="pre">multi</span></tt> option, <a class="reference internal" href="../../reference/method/db.collection.update/#db.collection.update" title="db.collection.update"><tt class="xref mongodb mongodb-method docutils literal"><span class="pre">update()</span></tt></a> method would correspond to the SQL
+<tt class="docutils literal"><span class="pre">UPDATE</span></tt> statement without the <tt class="docutils literal"><span class="pre">LIMIT</span></tt> clause.</p>
+</div>
+<p>Consider the following examples that illustrate the use of the
+<a class="reference internal" href="../../reference/method/db.collection.update/#db.collection.update" title="db.collection.update"><tt class="xref mongodb mongodb-method docutils literal"><span class="pre">update()</span></tt></a> method:</p>
+<ul>
+<li><p class="first">If the <tt class="docutils literal"><span class="pre">&lt;update&gt;</span></tt> argument contains only <a class="reference internal" href="../../reference/operators/#update-operators"><em>update operator</em></a> expressions such as the <a class="reference internal" href="../../reference/operators/#_S_set" title="$set"><tt class="xref mongodb mongodb-operator docutils literal"><span class="pre">$set</span></tt></a> operator
+expression, the <a class="reference internal" href="../../reference/method/db.collection.update/#db.collection.update" title="db.collection.update"><tt class="xref mongodb mongodb-method docutils literal"><span class="pre">update()</span></tt></a> method
+updates the corresponding fields in the document. To update fields in
+subdocuments, MongoDB uses <a class="reference internal" href="../../reference/glossary/#term-dot-notation"><em class="xref std std-term">dot notation</em></a>.</p>
+<p>The following operation queries the <tt class="docutils literal"><span class="pre">bios</span></tt> collection for the first
+document that has an <tt class="docutils literal"><span class="pre">_id</span></tt> field equal to <tt class="docutils literal"><span class="pre">1</span></tt> and sets the field
+named <tt class="docutils literal"><span class="pre">middle</span></tt> to the value <tt class="docutils literal"><span class="pre">Warner</span></tt> in the <tt class="docutils literal"><span class="pre">name</span></tt> subdocument
+and adds a new element to the <tt class="docutils literal"><span class="pre">awards</span></tt> field:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">db</span><span class="p">.</span><span class="nx">bios</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span>
+   <span class="p">{</span> <span class="nx">_id</span><span class="o">:</span> <span class="mi">1</span> <span class="p">},</span>
+   <span class="p">{</span>
+     <span class="nx">$set</span><span class="o">:</span> <span class="p">{</span> <span class="s1">&#39;name.middle&#39;</span><span class="o">:</span> <span class="s1">&#39;Warner&#39;</span> <span class="p">},</span>
+     <span class="nx">$push</span><span class="o">:</span> <span class="p">{</span> <span class="nx">awards</span><span class="o">:</span> <span class="p">{</span> <span class="nx">award</span><span class="o">:</span> <span class="s1">&#39;IBM Fellow&#39;</span><span class="p">,</span> <span class="nx">year</span><span class="o">:</span> <span class="mi">1963</span><span class="p">,</span> <span class="nx">by</span><span class="o">:</span> <span class="s1">&#39;IBM&#39;</span> <span class="p">}</span> <span class="p">}</span>
+   <span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">If the <tt class="docutils literal"><span class="pre">&lt;update&gt;</span></tt> argument contains <a class="reference internal" href="../../reference/operators/#_S_unset" title="$unset"><tt class="xref mongodb mongodb-operator docutils literal"><span class="pre">$unset</span></tt></a> operator, the
+<a class="reference internal" href="../../reference/method/db.collection.update/#db.collection.update" title="db.collection.update"><tt class="xref mongodb mongodb-method docutils literal"><span class="pre">update()</span></tt></a> method removes the field
+from the document.</p>
+<p>The following operation queries the <tt class="docutils literal"><span class="pre">bios</span></tt> collection for the
+first document that has an <tt class="docutils literal"><span class="pre">_id</span></tt> field equal to <tt class="docutils literal"><span class="pre">3</span></tt> and removes
+the <tt class="docutils literal"><span class="pre">birth</span></tt> field from the document:</p>
+</li>
+</ul>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="nx">db</span><span class="p">.</span><span class="nx">bios</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span>
+   <span class="p">{</span> <span class="nx">_id</span><span class="o">:</span> <span class="mi">3</span> <span class="p">},</span>
+   <span class="p">{</span> <span class="nx">$unset</span><span class="o">:</span> <span class="p">{</span> <span class="nx">birth</span><span class="o">:</span> <span class="mi">1</span> <span class="p">}</span> <span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ul>
+<li><p class="first">If the <tt class="docutils literal"><span class="pre">&lt;update&gt;</span></tt> argument contains fields not currently in the
+document, the <a class="reference internal" href="../../reference/method/db.collection.update/#db.collection.update" title="db.collection.update"><tt class="xref mongodb mongodb-method docutils literal"><span class="pre">update()</span></tt></a> method
+adds the new fields to the document.</p>
+<p>The following operation queries the <tt class="docutils literal"><span class="pre">bios</span></tt> collection for the
+first document that has an <tt class="docutils literal"><span class="pre">_id</span></tt> field equal to <tt class="docutils literal"><span class="pre">3</span></tt> and adds to
+the document a new <tt class="docutils literal"><span class="pre">mbranch</span></tt> field and a new <tt class="docutils literal"><span class="pre">aka</span></tt> field in the
+subdocument <tt class="docutils literal"><span class="pre">name</span></tt>:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">db</span><span class="p">.</span><span class="nx">bios</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span>
+   <span class="p">{</span> <span class="nx">_id</span><span class="o">:</span> <span class="mi">3</span> <span class="p">},</span>
+   <span class="p">{</span> <span class="nx">$set</span><span class="o">:</span> <span class="p">{</span>
+             <span class="nx">mbranch</span><span class="o">:</span> <span class="s1">&#39;Navy&#39;</span><span class="p">,</span>
+             <span class="s1">&#39;name.aka&#39;</span><span class="o">:</span> <span class="s1">&#39;Amazing Grace&#39;</span>
+           <span class="p">}</span>
+   <span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">If the <tt class="docutils literal"><span class="pre">&lt;update&gt;</span></tt> argument contains only field and value pairs, the
+<a class="reference internal" href="../../reference/method/db.collection.update/#db.collection.update" title="db.collection.update"><tt class="xref mongodb mongodb-method docutils literal"><span class="pre">update()</span></tt></a> method <em>replaces</em> the
+existing document with the document in the <tt class="docutils literal"><span class="pre">&lt;update&gt;</span></tt> argument,
+except for the <tt class="docutils literal"><span class="pre">_id</span></tt> field.</p>
+<p>The following operation queries the <tt class="docutils literal"><span class="pre">bios</span></tt> collection for the
+first document that has a <tt class="docutils literal"><span class="pre">name</span></tt> field equal to <tt class="docutils literal"><span class="pre">{</span> <span class="pre">first:</span> <span class="pre">'John',</span>
+<span class="pre">last:</span> <span class="pre">'McCarthy'</span> <span class="pre">}</span></tt> and replaces all but the <tt class="docutils literal"><span class="pre">_id</span></tt> field in the
+document with the fields in the <tt class="docutils literal"><span class="pre">&lt;update&gt;</span></tt> argument:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">db</span><span class="p">.</span><span class="nx">bios</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span>
+   <span class="p">{</span> <span class="nx">name</span><span class="o">:</span> <span class="p">{</span> <span class="nx">first</span><span class="o">:</span> <span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="nx">last</span><span class="o">:</span> <span class="s1">&#39;McCarthy&#39;</span> <span class="p">}</span> <span class="p">},</span>
+   <span class="p">{</span> <span class="nx">name</span><span class="o">:</span> <span class="p">{</span> <span class="nx">first</span><span class="o">:</span> <span class="s1">&#39;Ken&#39;</span><span class="p">,</span> <span class="nx">last</span><span class="o">:</span> <span class="s1">&#39;Iverson&#39;</span> <span class="p">},</span>
+     <span class="nx">born</span><span class="o">:</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="s1">&#39;Dec 17, 1941&#39;</span><span class="p">),</span>
+     <span class="nx">died</span><span class="o">:</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="s1">&#39;Oct 19, 2004&#39;</span><span class="p">),</span>
+     <span class="nx">contribs</span><span class="o">:</span> <span class="p">[</span> <span class="s1">&#39;APL&#39;</span><span class="p">,</span> <span class="s1">&#39;J&#39;</span> <span class="p">],</span>
+     <span class="nx">awards</span><span class="o">:</span> <span class="p">[</span>
+               <span class="p">{</span> <span class="nx">award</span><span class="o">:</span> <span class="s1">&#39;Turing Award&#39;</span><span class="p">,</span>
+                 <span class="nx">year</span><span class="o">:</span> <span class="mi">1979</span><span class="p">,</span>
+                 <span class="nx">by</span><span class="o">:</span> <span class="s1">&#39;ACM&#39;</span> <span class="p">},</span>
+               <span class="p">{</span> <span class="nx">award</span><span class="o">:</span> <span class="s1">&#39;Harry H. Goode Memorial Award&#39;</span><span class="p">,</span>
+                 <span class="nx">year</span><span class="o">:</span> <span class="mi">1975</span><span class="p">,</span>
+                 <span class="nx">by</span><span class="o">:</span> <span class="s1">&#39;IEEE Computer Society&#39;</span> <span class="p">},</span>
+               <span class="p">{</span> <span class="nx">award</span><span class="o">:</span> <span class="s1">&#39;IBM Fellow&#39;</span><span class="p">,</span>
+                 <span class="nx">year</span><span class="o">:</span> <span class="mi">1970</span><span class="p">,</span>
+                 <span class="nx">by</span><span class="o">:</span> <span class="s1">&#39;IBM&#39;</span> <span class="p">}</span>
+     <span class="p">]</span>
+   <span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">If the update operation requires an update of an element in an array
+field:</p>
+<ul>
+<li><p class="first">The <a class="reference internal" href="../../reference/method/db.collection.update/#db.collection.update" title="db.collection.update"><tt class="xref mongodb mongodb-method docutils literal"><span class="pre">update()</span></tt></a> method can perform
+the update using the position of the element and
+<a class="reference internal" href="../../reference/glossary/#term-dot-notation"><em class="xref std std-term">dot notation</em></a>. Arrays in MongoDB are zero-based.</p>
+<p>The following operation queries the <tt class="docutils literal"><span class="pre">bios</span></tt> collection for
+the first document with <tt class="docutils literal"><span class="pre">_id</span></tt> field equal to <tt class="docutils literal"><span class="pre">1</span></tt> and updates the
+second element in the <tt class="docutils literal"><span class="pre">contribs</span></tt> array:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">db</span><span class="p">.</span><span class="nx">bios</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span>
+   <span class="p">{</span> <span class="nx">_id</span><span class="o">:</span> <span class="mi">1</span> <span class="p">},</span>
+   <span class="p">{</span> <span class="nx">$set</span><span class="o">:</span> <span class="p">{</span> <span class="s1">&#39;contribs.1&#39;</span><span class="o">:</span> <span class="s1">&#39;ALGOL 58&#39;</span> <span class="p">}</span> <span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">The <a class="reference internal" href="../../reference/method/db.collection.update/#db.collection.update" title="db.collection.update"><tt class="xref mongodb mongodb-method docutils literal"><span class="pre">update()</span></tt></a> method can perform
+the update using the <a class="reference internal" href="../../reference/operators/#_S_" title="$"><tt class="xref mongodb mongodb-operator docutils literal"><span class="pre">$</span></tt></a> positional operator if the
+position is not known. The array field must appear in the <tt class="docutils literal"><span class="pre">query</span></tt>
+argument in order to determine which array element to update.</p>
+<p>The following operation queries the <tt class="docutils literal"><span class="pre">bios</span></tt> collection for the first
+document where the <tt class="docutils literal"><span class="pre">_id</span></tt> field equals <tt class="docutils literal"><span class="pre">3</span></tt> and the <tt class="docutils literal"><span class="pre">contribs</span></tt>
+array contains an element equal to <tt class="docutils literal"><span class="pre">compiler</span></tt>. If found, the
+<a class="reference internal" href="../../reference/method/db.collection.update/#db.collection.update" title="db.collection.update"><tt class="xref mongodb mongodb-method docutils literal"><span class="pre">update()</span></tt></a> method updates the
+first matching element in the array to <tt class="docutils literal"><span class="pre">A</span> <span class="pre">compiler</span></tt> in the
+document:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">db</span><span class="p">.</span><span class="nx">bios</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span>
+   <span class="p">{</span> <span class="nx">_id</span><span class="o">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;contribs&#39;</span><span class="o">:</span> <span class="s1">&#39;compiler&#39;</span> <span class="p">},</span>
+   <span class="p">{</span> <span class="nx">$set</span><span class="o">:</span> <span class="p">{</span> <span class="s1">&#39;contribs.$&#39;</span><span class="o">:</span> <span class="s1">&#39;A compiler&#39;</span> <span class="p">}</span> <span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">The <a class="reference internal" href="../../reference/method/db.collection.update/#db.collection.update" title="db.collection.update"><tt class="xref mongodb mongodb-method docutils literal"><span class="pre">update()</span></tt></a> method can perform
+the update of an array that contains subdocuments by using the
+positional operator (i.e. <a class="reference internal" href="../../reference/operators/#_S_" title="$"><tt class="xref mongodb mongodb-operator docutils literal"><span class="pre">$</span></tt></a>) and the <a class="reference internal" href="../../reference/glossary/#term-dot-notation"><em class="xref std std-term">dot notation</em></a>.</p>
+<p>The following operation queries the <tt class="docutils literal"><span class="pre">bios</span></tt> collection for the first
+document where the <tt class="docutils literal"><span class="pre">_id</span></tt> field equals <tt class="docutils literal"><span class="pre">6</span></tt> and the <tt class="docutils literal"><span class="pre">awards</span></tt>
+array contains a subdocument element with the <tt class="docutils literal"><span class="pre">by</span></tt> field equal
+to <tt class="docutils literal"><span class="pre">ACM</span></tt>. If found, the <a class="reference internal" href="../../reference/method/db.collection.update/#db.collection.update" title="db.collection.update"><tt class="xref mongodb mongodb-method docutils literal"><span class="pre">update()</span></tt></a> method updates the <tt class="docutils literal"><span class="pre">by</span></tt> field in the
+first matching subdocument:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">db</span><span class="p">.</span><span class="nx">bios</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span>
+   <span class="p">{</span> <span class="nx">_id</span><span class="o">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s1">&#39;awards.by&#39;</span><span class="o">:</span> <span class="s1">&#39;ACM&#39;</span>  <span class="p">}</span> <span class="p">,</span>
+   <span class="p">{</span> <span class="nx">$set</span><span class="o">:</span> <span class="p">{</span> <span class="s1">&#39;awards.$.by&#39;</span><span class="o">:</span> <span class="s1">&#39;Association for Computing Machinery&#39;</span> <span class="p">}</span> <span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p class="first">If the <tt class="docutils literal"><span class="pre">&lt;options&gt;</span></tt> argument contains the <tt class="docutils literal"><span class="pre">multi</span></tt> option set to
+<tt class="docutils literal"><span class="pre">true</span></tt> or <tt class="docutils literal"><span class="pre">1</span></tt>, the <a class="reference internal" href="../../reference/method/db.collection.update/#db.collection.update" title="db.collection.update"><tt class="xref mongodb mongodb-method docutils literal"><span class="pre">update()</span></tt></a>
+method updates all documents that match the query.</p>
+<p>The following operation queries the <tt class="docutils literal"><span class="pre">bios</span></tt> collection for all
+documents where the <tt class="docutils literal"><span class="pre">awards</span></tt> field contains a subdocument element
+with the <tt class="docutils literal"><span class="pre">award</span></tt> field equal to <tt class="docutils literal"><span class="pre">Turing</span></tt> and sets the <tt class="docutils literal"><span class="pre">turing</span></tt>
+field to <tt class="docutils literal"><span class="pre">true</span></tt> in the matching documents:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">db</span><span class="p">.</span><span class="nx">bios</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span>
+   <span class="p">{</span> <span class="s1">&#39;awards.award&#39;</span><span class="o">:</span> <span class="s1">&#39;Turing&#39;</span> <span class="p">},</span>
+   <span class="p">{</span> <span class="nx">$set</span><span class="o">:</span> <span class="p">{</span> <span class="nx">turing</span><span class="o">:</span> <span class="kc">true</span> <span class="p">}</span> <span class="p">},</span>
+   <span class="p">{</span> <span class="nx">multi</span><span class="o">:</span> <span class="kc">true</span> <span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">If you set the <tt class="docutils literal"><span class="pre">upsert</span></tt> option in the <tt class="docutils literal"><span class="pre">&lt;options&gt;</span></tt> argument to
+<tt class="docutils literal"><span class="pre">true</span></tt> or <tt class="docutils literal"><span class="pre">1</span></tt> and no existing document match the <tt class="docutils literal"><span class="pre">&lt;query&gt;</span></tt>
+argument, the <a class="reference internal" href="../../reference/method/db.collection.update/#db.collection.update" title="db.collection.update"><tt class="xref mongodb mongodb-method docutils literal"><span class="pre">update()</span></tt></a> method can
+insert a new document into the collection.</p>
+<p>The following operation queries the <tt class="docutils literal"><span class="pre">bios</span></tt> collection for a
+document with the <tt class="docutils literal"><span class="pre">_id</span></tt> field equal to <tt class="docutils literal"><span class="pre">11</span></tt> and the <tt class="docutils literal"><span class="pre">name</span></tt>
+field equal to <tt class="docutils literal"><span class="pre">{</span> <span class="pre">first:</span> <span class="pre">'James',</span> <span class="pre">last:</span> <span class="pre">'Gosling'}</span></tt>. If the query
+selects a document, the operation performs an update operation. If a
+document is not found, <a class="reference internal" href="../../reference/method/db.collection.update/#db.collection.update" title="db.collection.update"><tt class="xref mongodb mongodb-method docutils literal"><span class="pre">update()</span></tt></a>
+inserts a new document containing the fields and values from
+<tt class="docutils literal"><span class="pre">&lt;query&gt;</span></tt> argument with the operations from the <tt class="docutils literal"><span class="pre">&lt;update&gt;</span></tt>
+argument applied. <a class="footnote-reference" href="#upsert-update-operators" id="id2">[1]</a></p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">db</span><span class="p">.</span><span class="nx">bios</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span>
+   <span class="p">{</span> <span class="nx">_id</span><span class="o">:</span><span class="mi">11</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="p">{</span> <span class="nx">first</span><span class="o">:</span> <span class="s1">&#39;James&#39;</span><span class="p">,</span> <span class="nx">last</span><span class="o">:</span> <span class="s1">&#39;Gosling&#39;</span> <span class="p">}</span> <span class="p">},</span>
+   <span class="p">{</span>
+     <span class="nx">$set</span><span class="o">:</span> <span class="p">{</span>
+              <span class="nx">born</span><span class="o">:</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="s1">&#39;May 19, 1955&#39;</span><span class="p">),</span>
+              <span class="nx">contribs</span><span class="o">:</span> <span class="p">[</span> <span class="s1">&#39;Java&#39;</span> <span class="p">],</span>
+              <span class="nx">awards</span><span class="o">:</span> <span class="p">[</span>
+                        <span class="p">{</span> <span class="nx">award</span><span class="o">:</span> <span class="s1">&#39;The Economist Innovation Award&#39;</span><span class="p">,</span>
+                          <span class="nx">year</span><span class="o">:</span> <span class="mi">2002</span><span class="p">,</span>
+                          <span class="nx">by</span><span class="o">:</span> <span class="s1">&#39;The Economist&#39;</span> <span class="p">},</span>
+                        <span class="p">{</span> <span class="nx">award</span><span class="o">:</span> <span class="s1">&#39;Officer of the Order of Canada&#39;</span><span class="p">,</span>
+                          <span class="nx">year</span><span class="o">:</span> <span class="mi">2007</span><span class="p">,</span>
+                          <span class="nx">by</span><span class="o">:</span> <span class="s1">&#39;Canada&#39;</span> <span class="p">}</span>
+             <span class="p">]</span>
+          <span class="p">}</span>
+   <span class="p">},</span>
+   <span class="p">{</span> <span class="nx">upsert</span><span class="o">:</span> <span class="kc">true</span> <span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>See also <a class="reference internal" href="../create/#crud-create-update"><em>Create with Upsert</em></a>.</p>
+</li>
+</ul>
+<blockquote>
+<div><span class="target" id="crud-update-save"></span></div></blockquote>
+<table class="docutils footnote" frame="void" id="upsert-update-operators" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[1]</a></td><td>If the <tt class="docutils literal"><span class="pre">&lt;update&gt;</span></tt>
+argument includes only field and value pairs, the new document
+contains the fields and values specified in the <tt class="docutils literal"><span class="pre">&lt;update&gt;</span></tt>
+argument. If the <tt class="docutils literal"><span class="pre">&lt;update&gt;</span></tt> argument includes only <a class="reference internal" href="../../reference/operators/#update-operators"><em>update
+operators</em></a>, the new document contains the fields
+and values from <tt class="docutils literal"><span class="pre">&lt;query&gt;</span></tt> argument with the operations from the
+<tt class="docutils literal"><span class="pre">&lt;update&gt;</span></tt> argument applied.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="save">
+<h2>Save<a class="headerlink" href="#save" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="../../reference/method/db.collection.save/#db.collection.save" title="db.collection.save"><tt class="xref mongodb mongodb-method docutils literal"><span class="pre">save()</span></tt></a> method updates an existing
+document or inserts a document depending on the <tt class="docutils literal"><span class="pre">_id</span></tt> field of the
+document. The <a class="reference internal" href="../../reference/method/db.collection.save/#db.collection.save" title="db.collection.save"><tt class="xref mongodb mongodb-method docutils literal"><span class="pre">save()</span></tt></a> method is
+analogous to the <a class="reference internal" href="../../reference/method/db.collection.update/#db.collection.update" title="db.collection.update"><tt class="xref mongodb mongodb-method docutils literal"><span class="pre">update()</span></tt></a> method
+with the <tt class="docutils literal"><span class="pre">upsert</span></tt> option and a <tt class="docutils literal"><span class="pre">&lt;query&gt;</span></tt> argument on the <tt class="docutils literal"><span class="pre">_id</span></tt>
+field.</p>
+<p>The <a class="reference internal" href="../../reference/method/db.collection.save/#db.collection.save" title="db.collection.save"><tt class="xref mongodb mongodb-method docutils literal"><span class="pre">save()</span></tt></a> method has the
+following syntax:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">db</span><span class="p">.</span><span class="nx">collection</span><span class="p">.</span><span class="nx">save</span><span class="p">(</span> <span class="o">&lt;</span><span class="nb">document</span><span class="o">&gt;</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>Consider the following examples of the <a class="reference internal" href="../../reference/method/db.collection.save/#db.collection.save" title="db.collection.save"><tt class="xref mongodb mongodb-method docutils literal"><span class="pre">save()</span></tt></a> method:</p>
+<ul>
+<li><p class="first">If the <tt class="docutils literal"><span class="pre">&lt;document&gt;</span></tt> argument contains the <tt class="docutils literal"><span class="pre">_id</span></tt> field that exists
+in the collection, the <a class="reference internal" href="../../reference/method/db.collection.save/#db.collection.save" title="db.collection.save"><tt class="xref mongodb mongodb-method docutils literal"><span class="pre">save()</span></tt></a> method
+performs an update that replaces the existing document with the
+<tt class="docutils literal"><span class="pre">&lt;document&gt;</span></tt> argument.</p>
+<p>The following operation queries the <tt class="docutils literal"><span class="pre">bios</span></tt> collection for a
+document where the <tt class="docutils literal"><span class="pre">_id</span></tt> equals
+<tt class="docutils literal"><span class="pre">ObjectId(&quot;507c4e138fada716c89d0014&quot;)</span></tt> and replaces the document
+with the <tt class="docutils literal"><span class="pre">&lt;document&gt;</span></tt> argument:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">db</span><span class="p">.</span><span class="nx">bios</span><span class="p">.</span><span class="nx">save</span><span class="p">(</span>
+   <span class="p">{</span>
+     <span class="nx">_id</span><span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;507c4e138fada716c89d0014&quot;</span><span class="p">),</span>
+     <span class="nx">name</span><span class="o">:</span> <span class="p">{</span> <span class="nx">first</span><span class="o">:</span> <span class="s1">&#39;Martin&#39;</span><span class="p">,</span> <span class="nx">last</span><span class="o">:</span> <span class="s1">&#39;Odersky&#39;</span> <span class="p">},</span>
+     <span class="nx">contribs</span><span class="o">:</span> <span class="p">[</span> <span class="s1">&#39;Scala&#39;</span> <span class="p">]</span>
+   <span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">If no <tt class="docutils literal"><span class="pre">_id</span></tt> field exists or if the <tt class="docutils literal"><span class="pre">_id</span></tt> field exists but does
+not match any document in the collection, the <a class="reference internal" href="../../reference/method/db.collection.save/#db.collection.save" title="db.collection.save"><tt class="xref mongodb mongodb-method docutils literal"><span class="pre">save()</span></tt></a> method performs an insert.</p>
+<p>The following operation adds the <tt class="docutils literal"><span class="pre">_id</span></tt> field to the document,
+assigns to the field a unique <a class="reference internal" href="../../reference/glossary/#term-objectid"><em class="xref std std-term">ObjectId</em></a>, and
+inserts the document into the <tt class="docutils literal"><span class="pre">bios</span></tt> collection:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">db</span><span class="p">.</span><span class="nx">bios</span><span class="p">.</span><span class="nx">save</span><span class="p">(</span>
+   <span class="p">{</span>
+     <span class="nx">name</span><span class="o">:</span> <span class="p">{</span> <span class="nx">first</span><span class="o">:</span> <span class="s1">&#39;Larry&#39;</span><span class="p">,</span> <span class="nx">last</span><span class="o">:</span> <span class="s1">&#39;Wall&#39;</span> <span class="p">},</span>
+     <span class="nx">contribs</span><span class="o">:</span> <span class="p">[</span> <span class="s1">&#39;Perl&#39;</span> <span class="p">]</span>
+   <span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="../create/#crud-create-save"><em>Create with Save</em></a>.</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+
+
+<div id="btnv">
+<ul id="btnvl">
+<li id="btnvpr"><a href="../read/" title="Previous Section: Read">&lt; &nbsp; Read</a></li>
+<li id="btnvup"><a href="../../crud/" title="Parent Section: CRUD" >&#47;&#92;&nbsp; CRUD</a></li>
+<li id="btnvnx"><a href="../delete/" title="Next Section: Delete">Delete &nbsp;&gt;</a></li>
+</ul>
+</div>
+</div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+
+<h3><a href="../../contents/">MongoDB Manual</a>
+<small>(<a href="../../genindex/">Index</a>)</small>
+</h3>
+
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../about/">About MongoDB Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/">Installing MongoDB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../replication/">Replication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sharding/">Sharding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../administration/">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../security/">Security</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../crud/">CRUD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../crud/#read-and-write-operations">Read and Write Operations</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../crud/#crud-operations">CRUD Operations</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../create/">Create</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../read/">Read</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="">Update</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#crud-update-update">Update</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#save">Save</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../delete/">Delete</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../aggregation/">Aggregation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../indexes/">Indexes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../">Application Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mongo/">Using the MongoDB Shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../use-cases/">Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../faq/">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/">Reference</a></li>
+</ul>
+
+<h3>Formats</h3>
+<ul class="this-page-menu">
+  <li><a href="/master/single/">MongoDB Manual, Single HTML Page</a></li>
+  <li><a href="http://docs.mongodb.org/master/MongoDB-Manual-master.pdf" rel="nofollow">MongoDB Manual, PDF Format</a></li>
+  <li><a href="http://docs.mongodb.org/master/MongoDB-Manual-master.epub" rel="nofollow">MongoDB Manual, ePub Format</a></li>
+</ul>
+
+<h3>Translations</h3>
+<ul class="translation-menu">
+  <li><a href="http://jp.docs.mongodb.org/master/applications/update" rel="nofollow">Japanese</a></li>
+  <li><a href="http://cn.docs.mongodb.org/master/applications/update" rel="nofollow">Chinese</a></li>
+  <!-- <li><a href="http://docs.mongodb.org/master/applications/update" rel="nofollow">English</a></li> -->
+</ul>
+<h3>Knowledge Base </h3>
+<ul class="kb-menu">
+  <li><a href="../../tutorial/">Tutorials</a></li>
+  <li><a href="../../faq/">Frequently Asked Questions</a></li>
+  <li><a href="../../use-cases/">Use Cases</a></li>
+</ul><h3>MongoDB Wiki</h3>
+
+<ul>
+ <li><strong>Getting Started</strong>
+   <ul>
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Quickstart">Quickstart</a></li> -->
+     <li><a href="http://mongodb.org/display/DOCS/Introduction">Introduction</a></li>
+     <li><a href="http://www.mongodb.org/downloads">Downloads</a></li>
+     <!-- <li><a href="http://mongodb.org/display/DOCS/SQL+to+Mongo+Mapping+Chart">SQL to MongoDB Mapping</a></li> -->
+   </ul>
+ </li>
+ <li><strong><a href="http://mongodb.org/display/DOCS/Developer+Zone">Developer Documentation</a></strong>
+   <!-- <ul> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Connections">Connections</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Databases">Databases</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Collections">Collections</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Documents">Documents</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/GridFS">GridFS</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Indexes">Indexes</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Querying">Querying</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Aggregation">Aggregation</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Optimization">Optimization</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Inserting">Inserting</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Updating">Updating</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Removing">Removing</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/MapReduce">MapReduce</a></li> -->
+   <!-- </ul> -->
+ </li>
+ <li><strong><a href="http://mongodb.org/display/DOCS/Admin+Zone">Administrative Documentation</a></strong>
+   <ul>
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Components">Components</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Journaling">Journaling</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Production+Notes">Production Notes</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Replication">Replication</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Sharding">Sharding</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Monitoring+and+Diagnostics">Monitoring and Diagnostics</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Backups">Backups</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Durability+and+Repair">Durability and Repair</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Security+and+Authentication">Security and Authentication</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Starting+and+Stopping+Mongo">Starting/Stopping MongoDB</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/GridFS+Tools">GridFS Tools</a></li> -->
+     <li><a href="http://mongodb.org/display/DOCS/DBA+Operations+from+the+Shell">DB Operations from the Shell</a></li>
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Architecture+and+Components">Architecture and Components</a></li> -->
+     <li><a href="http://mongodb.org/display/DOCS/Windows">Windows</a></li>
+     <li><a href="http://mongodb.org/display/DOCS/Troubleshooting">Troubleshooting</a></li>
+   </ul>
+ </li>
+ <li><strong><a href="http://www.mongodb.org/display/DOCS/Community">Community and Ecosystem</a></strong>
+   <ul>
+     <li><a href="http://10gen.com">10gen</a></li>
+     <li><a href="http://www.mongodb.org/events">MongoDB Events</a></li>
+     <li><a href="http://planet.mongodb.org">Planet MongoDB</a></li>
+     <li><a href="http://mongodb.org/display/DOCS/MongoDB+Masters">MongoDB Masters</a></li>
+     <li><a href="http://mongodb.org/display/DOCS/Slides+and+Video">Slides and Video</a></li>
+     <!-- <li><a href="http://cookbook.mongodb.org/">Cookbook</a></li> -->
+     <li><a href="http://mongodb.org/display/DOCS/Hosting+Center">Hosting Center</a></li>
+     <li><a href="http://mms.10gen.com/">MongoDB Monitoring Service</a> (<a href="http://mms.10gen.com/help/">docs</a>)</li>
+     <li><a href="http://mongodb.org/display/DOCS/Admin+UIs">Administrative Interfaces</a></li>
+     <!-- <li><a href="http://mongodb.org/display/DOCS/International+Docs">International Documentation</a></li> -->
+     <li><a href="http://10gen.com/books/">MongoDB Books</a></li>
+   </ul>
+ </li>
+ <li><strong><a href="http://www.mongodb.org/display/DOCS/Drivers">Drivers</a></strong>
+   <ul>
+     <li>JavaScript (<a href="http://mongodb.org/display/DOCS/Javascript+Language+Center">wiki</a>, <a href="http://api.mongodb.org/js/current">docs</a>)</li>
+     <li>Python (<a href="http://mongodb.org/display/DOCS/Python+Language+Center">wiki</a>, <a href="http://api.mongodb.org/python/current">docs</a>)</li>
+     <li>Ruby (<a href="http://mongodb.org/display/DOCS/Ruby+Language+Center">wiki</a>, <a href="http://api.mongodb.org/ruby/current">docs</a>)</li>
+     <li>PHP (<a href="http://mongodb.org/display/DOCS/PHP+Language+Center">wiki</a>, <a href="http://php.net/mongo/">docs</a>)</li>
+     <li>Perl (<a href="http://mongodb.org/display/DOCS/Perl+Language+Center">wiki</a>, <a href="http://api.mongodb.org/perl/current/">docs</a>)</li>
+     <li>Java (<a href="http://mongodb.org/display/DOCS/Java+Language+Center">wiki</a>, <a href="http://api.mongodb.org/java/current">docs</a>)</li>
+     <li>Scala (<a href="http://mongodb.org/display/DOCS/Scala+Language+Center">wiki</a>, <a href="http://api.mongodb.org/scala/casbah/current/">docs</a>)</li>
+     <li>C# (<a href="http://mongodb.org/display/DOCS/CSharp+Language+Center">wiki</a>, <a href="http://api.mongodb.org/csharp/current/">docs</a>)</li>
+     <li>C (<a href="http://mongodb.org/display/DOCS/C+Language+Center">wiki</a>, <a href="http://api.mongodb.org/c/current/">docs</a>)</li>
+     <li>C++ (<a href="http://mongodb.org/pages/viewpage.action?pageId=133409">wiki</a>, <a href="http://api.mongodb.org/cplusplus/current/">docs</a>)</li>
+     <li>Haskell (<a href="http://mongodb.org/display/DOCS/Haskell+Language+Center">wiki</a>, <a href="http://api.mongodb.org/haskell">docs</a>)</li>
+     <li>Erlang (<a href="http://mongodb.org/display/DOCS/Erlang+Language+Center">wiki</a>, <a href="http://api.mongodb.org/erlang">docs</a>)</li>
+   </ul>
+ </li>
+</ul>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  <div class="footer">
+        &copy; Copyright 2011-2012, 10gen, Inc.  Licensed under <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons</a>.
+
+    <p>MongoDB&reg;, Mongo&reg;, and the leaf logo are registered trademarks of 10gen, Inc.</p>
+    <p>The MongoDB Documentation Project uses <a href="https://github.com/mongodb/docs">GitHub</a>. Fork the repository and submit pull requests to contribute.</p>
+    <p>If you find any issues with the documentation feel free to open a <a href="http://jira.mongodb.org/browse/DOCS">Jira Case</a> and we'll work to resolve it promptly.</p>
+
+  </div><script type="text/javascript">
+var _gaq = _gaq || [];
+var pluginUrl = (('https:' == document.location.protocol) ? 'https://ssl.' : 'http://www.') + 'google-analytics.com/plugins/ga/inpage_linkid.js';
+_gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+_gaq.push(['_setAccount', 'UA-7301842-8']);
+_gaq.push(['_setDomainName', 'docs.mongodb.org']);
+_gaq.push(['_trackPageview']);
+(function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ga, s);
+        })();
+</script>
+
+<script type="text/javascript">
+document.write(unescape("%3Cscript src='" + document.location.protocol + "//munchkin.marketo.net/munchkin.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script>try { mktoMunchkin("017-HGS-593"); } catch(e) {}</script>
+  </body>
+</html>

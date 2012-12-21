@@ -1,0 +1,344 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>The local Database &mdash; MongoDB Manual</title>
+
+    <link rel="shortcut icon" href="http://media.mongodb.org/favicon.ico" />
+    <meta name="robots" content="index" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="canonical" href="http://docs.mongodb.org/master/reference/local-database" />
+
+    
+    
+    <link rel="stylesheet" href="../../_static/mongodb-docs.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.2.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <link rel="search" type="application/opensearchdescription+xml" href="http://docs.mongodb.org/osd.xml" title="MongoDB Help"/>
+<link rel="author" title="About these documents" href="../../about/" />
+<link rel="top" title="MongoDB Manual" href="../../" />
+<link rel="up" title="Reference" href="../" />
+<link rel="next" title="System Collections" href="../system-collections/" />
+<link rel="prev" title="Config Database Contents" href="../config-database/" />
+<!-- Put the following javascript before the closing </head> tag. -->
+<script>
+  (function() {
+    var cx = '017213726194841070573:WMX6838984';
+    var gcse = document.createElement('script'); gcse.type = 'text/javascript'; gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+  </head>
+  <body>
+<div id="top-right">
+        <div class="user-right">
+                <ul id="header-menu-bar" class="ajs-menu-bar">
+                <li class="normal"><a target="_blank" href="http://groups.google.com/group/mongodb-user">Forums</a></li>
+                <li class="normal"><a target="_blank" href="http://blog.mongodb.org/">Blog</a></li>
+                <li class="normal"><a href="http://www.mongodb.org/downloads">Download</a></li>
+                <li class="normal"><a href="http://www.mongodb.org/display/DOCS/Drivers">Drivers</a></li>
+                <li class="normal"><a href="http://www.mongodb.org/display/DOCS/Events">Events</a></li>
+                <li class="normal last"><a class="last" href="http://www.mongodb.org/display/DOCS/International+Documentation">International</a></li>
+                </ul>
+        </div>
+</div>
+<div id="header-db" class="spread">
+        <div class="split">
+                <div id="logo">
+                        <div><a href="../../"><img src="../../_static/logo-mongodb.png" width="190" height="55" alt="mongoDB" /></a></div>
+                </div>
+        </div>
+<div class="search-db"><gcse:searchbox></gcse:searchbox></div>
+<div id="etp">
+<ul>
+<li><a href="https://github.com/mongodb/docs/blob/master/source/reference/local-database.txt" target="_blank" title="Edit reference/local-database.txt on github">Edit this Page</a></li>
+<li><a href="http://github.com/mongodb/docs" target="_blank" title="Fork the documentation on GitHub and contribute.">GitHub</a></li>
+<li><a href="https://jira.mongodb.org/secure/CreateIssueDetails!init.jspa?pid=10380&issuetype=4&priority=4&summary=Comment+on%3a+%22reference/local-database%2Etxt%22" target="_blank" title="Report a problem with reference/local-database.txt on Jira">Report a problem</a></li>
+</ul>
+</div>
+</div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            <div id="cse-results"><gcse:searchresults></gcse:searchresults></div>
+            
+  <div class="section" id="the-local-database">
+<span id="replica-set-local-database"></span><h1>The <tt class="docutils literal"><span class="pre">local</span></tt> Database<a class="headerlink" href="#the-local-database" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="index-0"></span><span class="target" id="index-1"></span><span class="target" id="index-2"></span><div class="section" id="overview">
+<span id="index-3"></span><h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Every <tt class="xref mongodb mongodb-program docutils literal"><span class="pre">mongod</span></tt> instance has its own <tt class="docutils literal"><span class="pre">local</span></tt> database, which
+stores data used in the replication process, and other
+instance-specific data. The <tt class="docutils literal"><span class="pre">local</span></tt> database is invisible to
+replication: collections in the <tt class="docutils literal"><span class="pre">local</span></tt> database are not replicated.</p>
+<p>When running with authentication (i.e. <a class="reference internal" href="../configuration-options/#auth" title="auth"><tt class="xref mongodb mongodb-setting docutils literal"><span class="pre">auth</span></tt></a>), authenticating against the <tt class="docutils literal"><span class="pre">local</span></tt>
+database is equivalent to authenticating against the <tt class="docutils literal"><span class="pre">admin</span></tt>
+database. This authentication gives access to all databases.</p>
+<p>In replication, the <tt class="docutils literal"><span class="pre">local</span></tt> database store stores internal replication
+data for each member of a <a class="reference internal" href="../glossary/#term-replica-set"><em class="xref std std-term">replica set</em></a>. The <tt class="docutils literal"><span class="pre">local</span></tt> database contains the
+following collections used for replication:</p>
+</div>
+<div class="section" id="collections-on-replica-set-members">
+<h2>Collections on Replica Set Members<a class="headerlink" href="#collections-on-replica-set-members" title="Permalink to this headline">¶</a></h2>
+<dl class="data">
+<dt id="local.system.replset">
+<tt class="descclassname">local.system.</tt><tt class="descname">replset</tt><a class="headerlink" href="#local.system.replset" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="#local.system.replset" title="local.system.replset"><tt class="xref mongodb mongodb-data docutils literal"><span class="pre">local.system.replset</span></tt></a> holds the replica set&#8217;s configuration
+object as its single document. To view the object&#8217;s configuration
+information, issue <a class="reference internal" href="../replica-commands/#rs.conf" title="rs.conf"><tt class="xref mongodb mongodb-method docutils literal"><span class="pre">rs.conf()</span></tt></a> from the <tt class="xref mongodb mongodb-program docutils literal"><span class="pre">mongo</span></tt>
+shell. You can also query this collection directly.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="local.oplog.rs">
+<tt class="descclassname">local.oplog.</tt><tt class="descname">rs</tt><a class="headerlink" href="#local.oplog.rs" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="#local.oplog.rs" title="local.oplog.rs"><tt class="xref mongodb mongodb-data docutils literal"><span class="pre">local.oplog.rs</span></tt></a> is the capped collection that holds the
+<a class="reference internal" href="../glossary/#term-oplog"><em class="xref std std-term">oplog</em></a>. You set its size at creation using the
+<a class="reference internal" href="../configuration-options/#oplogSize" title="oplogSize"><tt class="xref mongodb mongodb-setting docutils literal"><span class="pre">oplogSize</span></tt></a> setting. To resize the oplog after replica set
+initiation, use the <a class="reference internal" href="../../tutorial/change-oplog-size/"><em>Change the Size of the Oplog</em></a>
+procedure. For additional information, see the
+<a class="reference internal" href="../../core/replication-internals/#replica-set-internals-oplog"><em>Oplog Internals</em></a> topic in this document and the
+<a class="reference internal" href="../../core/replication/#replica-set-oplog-sizing"><em>Oplog</em></a> topic in the
+<a class="reference internal" href="../../core/replication/"><em>Replication Fundamentals</em></a> document.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="local.replset.minvalid">
+<tt class="descclassname">local.replset.</tt><tt class="descname">minvalid</tt><a class="headerlink" href="#local.replset.minvalid" title="Permalink to this definition">¶</a></dt>
+<dd><p>This contains an object used internally by replica sets to track sync
+status.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="local.slaves">
+<tt class="descclassname">local.</tt><tt class="descname">slaves</tt><a class="headerlink" href="#local.slaves" title="Permalink to this definition">¶</a></dt>
+<dd><p>This contains information about each member of the set.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="collections-used-in-master-slave-replication">
+<h2>Collections used in Master/Slave Replication<a class="headerlink" href="#collections-used-in-master-slave-replication" title="Permalink to this headline">¶</a></h2>
+<p>In <a class="reference internal" href="../glossary/#term-master"><em class="xref std std-term">master</em></a>/<a class="reference internal" href="../glossary/#term-slave"><em class="xref std std-term">slave</em></a> replication, the <tt class="docutils literal"><span class="pre">local</span></tt> database contains
+the following collections:</p>
+<ul>
+<li><p class="first">On the master:</p>
+<dl class="data">
+<dt id="local.oplog._S_main">
+<tt class="descclassname">local.oplog.</tt><tt class="descname">$main</tt><a class="headerlink" href="#local.oplog._S_main" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is the oplog for the master-slave configuration.</p>
+</dd></dl>
+
+<dl class="data">
+<dt>
+<tt class="descclassname">local.</tt><tt class="descname">slaves</tt></dt>
+<dd><p>This contains information about each slave.</p>
+</dd></dl>
+
+</li>
+<li><p class="first">On each slave:</p>
+<dl class="data">
+<dt id="local.sources">
+<tt class="descclassname">local.</tt><tt class="descname">sources</tt><a class="headerlink" href="#local.sources" title="Permalink to this definition">¶</a></dt>
+<dd><p>This contains information about the slave&#8217;s master server.</p>
+</dd></dl>
+
+</li>
+</ul>
+</div>
+</div>
+
+
+<div id="btnv">
+<ul id="btnvl">
+<li id="btnvpr"><a href="../config-database/" title="Previous Section: Config Database Contents">&lt; &nbsp; Config Database Contents</a></li>
+<li id="btnvup"><a href="../" title="Parent Section: Reference" >&#47;&#92;&nbsp; Reference</a></li>
+<li id="btnvnx"><a href="../system-collections/" title="Next Section: System Collections">System Collections &nbsp;&gt;</a></li>
+</ul>
+</div>
+</div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+
+<h3><a href="../../contents/">MongoDB Manual</a>
+<small>(<a href="../../genindex/">Index</a>)</small>
+</h3>
+
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../about/">About MongoDB Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/">Installing MongoDB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../replication/">Replication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sharding/">Sharding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../administration/">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../security/">Security</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../crud/">CRUD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../aggregation/">Aggregation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../indexes/">Indexes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../applications/">Application Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mongo/">Using the MongoDB Shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../use-cases/">Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../faq/">Frequently Asked Questions</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../#mongodb-interface">MongoDB Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../#architecture-and-components">Architecture and Components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../#status-and-reporting">Status and Reporting</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../#internal-metadata">Internal Metadata</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../config-database/">Config Database Contents</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="">The <tt class="docutils literal"><span class="pre">local</span></tt> Database</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#collections-on-replica-set-members">Collections on Replica Set Members</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#collections-used-in-master-slave-replication">Collections used in Master/Slave Replication</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../system-collections/">System Collections</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../#general-reference">General Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../#release-notes">Release Notes</a></li>
+</ul>
+</li>
+</ul>
+
+<h3>Formats</h3>
+<ul class="this-page-menu">
+  <li><a href="/master/single/">MongoDB Manual, Single HTML Page</a></li>
+  <li><a href="http://docs.mongodb.org/master/MongoDB-Manual-master.pdf" rel="nofollow">MongoDB Manual, PDF Format</a></li>
+  <li><a href="http://docs.mongodb.org/master/MongoDB-Manual-master.epub" rel="nofollow">MongoDB Manual, ePub Format</a></li>
+</ul>
+
+<h3>Translations</h3>
+<ul class="translation-menu">
+  <li><a href="http://jp.docs.mongodb.org/master/reference/local-database" rel="nofollow">Japanese</a></li>
+  <li><a href="http://cn.docs.mongodb.org/master/reference/local-database" rel="nofollow">Chinese</a></li>
+  <!-- <li><a href="http://docs.mongodb.org/master/reference/local-database" rel="nofollow">English</a></li> -->
+</ul>
+<h3>Knowledge Base </h3>
+<ul class="kb-menu">
+  <li><a href="../../tutorial/">Tutorials</a></li>
+  <li><a href="../../faq/">Frequently Asked Questions</a></li>
+  <li><a href="../../use-cases/">Use Cases</a></li>
+</ul><h3>MongoDB Wiki</h3>
+
+<ul>
+ <li><strong>Getting Started</strong>
+   <ul>
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Quickstart">Quickstart</a></li> -->
+     <li><a href="http://mongodb.org/display/DOCS/Introduction">Introduction</a></li>
+     <li><a href="http://www.mongodb.org/downloads">Downloads</a></li>
+     <!-- <li><a href="http://mongodb.org/display/DOCS/SQL+to+Mongo+Mapping+Chart">SQL to MongoDB Mapping</a></li> -->
+   </ul>
+ </li>
+ <li><strong><a href="http://mongodb.org/display/DOCS/Developer+Zone">Developer Documentation</a></strong>
+   <!-- <ul> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Connections">Connections</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Databases">Databases</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Collections">Collections</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Documents">Documents</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/GridFS">GridFS</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Indexes">Indexes</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Querying">Querying</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Aggregation">Aggregation</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Optimization">Optimization</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Inserting">Inserting</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Updating">Updating</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Removing">Removing</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/MapReduce">MapReduce</a></li> -->
+   <!-- </ul> -->
+ </li>
+ <li><strong><a href="http://mongodb.org/display/DOCS/Admin+Zone">Administrative Documentation</a></strong>
+   <ul>
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Components">Components</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Journaling">Journaling</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Production+Notes">Production Notes</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Replication">Replication</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Sharding">Sharding</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Monitoring+and+Diagnostics">Monitoring and Diagnostics</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Backups">Backups</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Durability+and+Repair">Durability and Repair</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Security+and+Authentication">Security and Authentication</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Starting+and+Stopping+Mongo">Starting/Stopping MongoDB</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/GridFS+Tools">GridFS Tools</a></li> -->
+     <li><a href="http://mongodb.org/display/DOCS/DBA+Operations+from+the+Shell">DB Operations from the Shell</a></li>
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Architecture+and+Components">Architecture and Components</a></li> -->
+     <li><a href="http://mongodb.org/display/DOCS/Windows">Windows</a></li>
+     <li><a href="http://mongodb.org/display/DOCS/Troubleshooting">Troubleshooting</a></li>
+   </ul>
+ </li>
+ <li><strong><a href="http://www.mongodb.org/display/DOCS/Community">Community and Ecosystem</a></strong>
+   <ul>
+     <li><a href="http://10gen.com">10gen</a></li>
+     <li><a href="http://www.mongodb.org/events">MongoDB Events</a></li>
+     <li><a href="http://planet.mongodb.org">Planet MongoDB</a></li>
+     <li><a href="http://mongodb.org/display/DOCS/MongoDB+Masters">MongoDB Masters</a></li>
+     <li><a href="http://mongodb.org/display/DOCS/Slides+and+Video">Slides and Video</a></li>
+     <!-- <li><a href="http://cookbook.mongodb.org/">Cookbook</a></li> -->
+     <li><a href="http://mongodb.org/display/DOCS/Hosting+Center">Hosting Center</a></li>
+     <li><a href="http://mms.10gen.com/">MongoDB Monitoring Service</a> (<a href="http://mms.10gen.com/help/">docs</a>)</li>
+     <li><a href="http://mongodb.org/display/DOCS/Admin+UIs">Administrative Interfaces</a></li>
+     <!-- <li><a href="http://mongodb.org/display/DOCS/International+Docs">International Documentation</a></li> -->
+     <li><a href="http://10gen.com/books/">MongoDB Books</a></li>
+   </ul>
+ </li>
+ <li><strong><a href="http://www.mongodb.org/display/DOCS/Drivers">Drivers</a></strong>
+   <ul>
+     <li>JavaScript (<a href="http://mongodb.org/display/DOCS/Javascript+Language+Center">wiki</a>, <a href="http://api.mongodb.org/js/current">docs</a>)</li>
+     <li>Python (<a href="http://mongodb.org/display/DOCS/Python+Language+Center">wiki</a>, <a href="http://api.mongodb.org/python/current">docs</a>)</li>
+     <li>Ruby (<a href="http://mongodb.org/display/DOCS/Ruby+Language+Center">wiki</a>, <a href="http://api.mongodb.org/ruby/current">docs</a>)</li>
+     <li>PHP (<a href="http://mongodb.org/display/DOCS/PHP+Language+Center">wiki</a>, <a href="http://php.net/mongo/">docs</a>)</li>
+     <li>Perl (<a href="http://mongodb.org/display/DOCS/Perl+Language+Center">wiki</a>, <a href="http://api.mongodb.org/perl/current/">docs</a>)</li>
+     <li>Java (<a href="http://mongodb.org/display/DOCS/Java+Language+Center">wiki</a>, <a href="http://api.mongodb.org/java/current">docs</a>)</li>
+     <li>Scala (<a href="http://mongodb.org/display/DOCS/Scala+Language+Center">wiki</a>, <a href="http://api.mongodb.org/scala/casbah/current/">docs</a>)</li>
+     <li>C# (<a href="http://mongodb.org/display/DOCS/CSharp+Language+Center">wiki</a>, <a href="http://api.mongodb.org/csharp/current/">docs</a>)</li>
+     <li>C (<a href="http://mongodb.org/display/DOCS/C+Language+Center">wiki</a>, <a href="http://api.mongodb.org/c/current/">docs</a>)</li>
+     <li>C++ (<a href="http://mongodb.org/pages/viewpage.action?pageId=133409">wiki</a>, <a href="http://api.mongodb.org/cplusplus/current/">docs</a>)</li>
+     <li>Haskell (<a href="http://mongodb.org/display/DOCS/Haskell+Language+Center">wiki</a>, <a href="http://api.mongodb.org/haskell">docs</a>)</li>
+     <li>Erlang (<a href="http://mongodb.org/display/DOCS/Erlang+Language+Center">wiki</a>, <a href="http://api.mongodb.org/erlang">docs</a>)</li>
+   </ul>
+ </li>
+</ul>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  <div class="footer">
+        &copy; Copyright 2011-2012, 10gen, Inc.  Licensed under <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons</a>.
+
+    <p>MongoDB&reg;, Mongo&reg;, and the leaf logo are registered trademarks of 10gen, Inc.</p>
+    <p>The MongoDB Documentation Project uses <a href="https://github.com/mongodb/docs">GitHub</a>. Fork the repository and submit pull requests to contribute.</p>
+    <p>If you find any issues with the documentation feel free to open a <a href="http://jira.mongodb.org/browse/DOCS">Jira Case</a> and we'll work to resolve it promptly.</p>
+
+  </div><script type="text/javascript">
+var _gaq = _gaq || [];
+var pluginUrl = (('https:' == document.location.protocol) ? 'https://ssl.' : 'http://www.') + 'google-analytics.com/plugins/ga/inpage_linkid.js';
+_gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+_gaq.push(['_setAccount', 'UA-7301842-8']);
+_gaq.push(['_setDomainName', 'docs.mongodb.org']);
+_gaq.push(['_trackPageview']);
+(function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ga, s);
+        })();
+</script>
+
+<script type="text/javascript">
+document.write(unescape("%3Cscript src='" + document.location.protocol + "//munchkin.marketo.net/munchkin.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script>try { mktoMunchkin("017-HGS-593"); } catch(e) {}</script>
+  </body>
+</html>

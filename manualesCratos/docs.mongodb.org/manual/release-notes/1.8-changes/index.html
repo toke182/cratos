@@ -1,0 +1,278 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Changes in MongoDB 1.8 &mdash; MongoDB Manual</title>
+
+    <link rel="shortcut icon" href="http://media.mongodb.org/favicon.ico" />
+    <meta name="robots" content="index" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="canonical" href="http://docs.mongodb.org/master/release-notes/1.8-changes" />
+
+    
+    
+    <link rel="stylesheet" href="../../_static/mongodb-docs.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.2.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <link rel="search" type="application/opensearchdescription+xml" href="http://docs.mongodb.org/osd.xml" title="MongoDB Help"/>
+<link rel="author" title="About these documents" href="../../about/" />
+<link rel="top" title="MongoDB Manual" href="../../" />
+<!-- Put the following javascript before the closing </head> tag. -->
+<script>
+  (function() {
+    var cx = '017213726194841070573:WMX6838984';
+    var gcse = document.createElement('script'); gcse.type = 'text/javascript'; gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+  </head>
+  <body>
+<div id="top-right">
+        <div class="user-right">
+                <ul id="header-menu-bar" class="ajs-menu-bar">
+                <li class="normal"><a target="_blank" href="http://groups.google.com/group/mongodb-user">Forums</a></li>
+                <li class="normal"><a target="_blank" href="http://blog.mongodb.org/">Blog</a></li>
+                <li class="normal"><a href="http://www.mongodb.org/downloads">Download</a></li>
+                <li class="normal"><a href="http://www.mongodb.org/display/DOCS/Drivers">Drivers</a></li>
+                <li class="normal"><a href="http://www.mongodb.org/display/DOCS/Events">Events</a></li>
+                <li class="normal last"><a class="last" href="http://www.mongodb.org/display/DOCS/International+Documentation">International</a></li>
+                </ul>
+        </div>
+</div>
+<div id="header-db" class="spread">
+        <div class="split">
+                <div id="logo">
+                        <div><a href="../../"><img src="../../_static/logo-mongodb.png" width="190" height="55" alt="mongoDB" /></a></div>
+                </div>
+        </div>
+<div class="search-db"><gcse:searchbox></gcse:searchbox></div>
+<div id="etp">
+<ul>
+<li><a href="https://github.com/mongodb/docs/blob/master/source/release-notes/1.8-changes.txt" target="_blank" title="Edit release-notes/1.8-changes.txt on github">Edit this Page</a></li>
+<li><a href="http://github.com/mongodb/docs" target="_blank" title="Fork the documentation on GitHub and contribute.">GitHub</a></li>
+<li><a href="https://jira.mongodb.org/secure/CreateIssueDetails!init.jspa?pid=10380&issuetype=4&priority=4&summary=Comment+on%3a+%22release-notes/1.8-changes%2Etxt%22" target="_blank" title="Report a problem with release-notes/1.8-changes.txt on Jira">Report a problem</a></li>
+</ul>
+</div>
+</div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            <div id="cse-results"><gcse:searchresults></gcse:searchresults></div>
+            
+  <div class="section" id="changes-in-mongodb-1-8">
+<h1>Changes in MongoDB 1.8<a class="headerlink" href="#changes-in-mongodb-1-8" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../1.8/">Release Notes for MongoDB 1.8</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1.8/#upgrading">Upgrading</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1.8/#preparation">Preparation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.8/#upgrading-a-standalone-mongod">Upgrading a Standalone <tt class="docutils literal"><span class="pre">mongod</span></tt></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.8/#upgrading-a-replica-set">Upgrading a Replica Set</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.8/#upgrading-a-sharded-cluster">Upgrading a Sharded Cluster</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.8/#returning-to-1-6">Returning to 1.6</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../1.8/#journaling">Journaling</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1.8/#changes">Changes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1.8/#id1">Journaling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.8/#sparse-and-covered-indexes">Sparse and Covered Indexes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.8/#incremental-mapreduce-support">Incremental MapReduce Support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.8/#additional-changes-and-enhancements">Additional Changes and Enhancements</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../1.8/#id2">1.8.1</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../1.8/#id3">1.8.0</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../1.8/#id4">1.7.6</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../1.8/#id5">1.7.5</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../1.8/#id6">1.7.4</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../1.8/#id7">1.7.3</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../1.8/#id8">1.7.2</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../1.8/#id9">1.7.1</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../1.8/#id10">1.7.0</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../1.8/#release-announcement-forum-pages">Release Announcement Forum Pages</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1.8/#resources">Resources</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+<div id="btnv">
+<ul id="btnvl">
+</ul>
+</div>
+</div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+
+<h3><a href="../../contents/">MongoDB Manual</a>
+<small>(<a href="../../genindex/">Index</a>)</small>
+</h3>
+
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../about/">About MongoDB Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/">Installing MongoDB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../replication/">Replication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sharding/">Sharding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../administration/">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../security/">Security</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../crud/">CRUD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../aggregation/">Aggregation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../indexes/">Indexes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../applications/">Application Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mongo/">Using the MongoDB Shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../use-cases/">Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../faq/">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/">Reference</a></li>
+</ul>
+
+<h3>Formats</h3>
+<ul class="this-page-menu">
+  <li><a href="/master/single/">MongoDB Manual, Single HTML Page</a></li>
+  <li><a href="http://docs.mongodb.org/master/MongoDB-Manual-master.pdf" rel="nofollow">MongoDB Manual, PDF Format</a></li>
+  <li><a href="http://docs.mongodb.org/master/MongoDB-Manual-master.epub" rel="nofollow">MongoDB Manual, ePub Format</a></li>
+</ul>
+
+<h3>Translations</h3>
+<ul class="translation-menu">
+  <li><a href="http://jp.docs.mongodb.org/master/release-notes/1.8-changes" rel="nofollow">Japanese</a></li>
+  <li><a href="http://cn.docs.mongodb.org/master/release-notes/1.8-changes" rel="nofollow">Chinese</a></li>
+  <!-- <li><a href="http://docs.mongodb.org/master/release-notes/1.8-changes" rel="nofollow">English</a></li> -->
+</ul>
+<h3>Knowledge Base </h3>
+<ul class="kb-menu">
+  <li><a href="../../tutorial/">Tutorials</a></li>
+  <li><a href="../../faq/">Frequently Asked Questions</a></li>
+  <li><a href="../../use-cases/">Use Cases</a></li>
+</ul><h3>MongoDB Wiki</h3>
+
+<ul>
+ <li><strong>Getting Started</strong>
+   <ul>
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Quickstart">Quickstart</a></li> -->
+     <li><a href="http://mongodb.org/display/DOCS/Introduction">Introduction</a></li>
+     <li><a href="http://www.mongodb.org/downloads">Downloads</a></li>
+     <!-- <li><a href="http://mongodb.org/display/DOCS/SQL+to+Mongo+Mapping+Chart">SQL to MongoDB Mapping</a></li> -->
+   </ul>
+ </li>
+ <li><strong><a href="http://mongodb.org/display/DOCS/Developer+Zone">Developer Documentation</a></strong>
+   <!-- <ul> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Connections">Connections</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Databases">Databases</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Collections">Collections</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Documents">Documents</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/GridFS">GridFS</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Indexes">Indexes</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Querying">Querying</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Aggregation">Aggregation</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Optimization">Optimization</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Inserting">Inserting</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Updating">Updating</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Removing">Removing</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/MapReduce">MapReduce</a></li> -->
+   <!-- </ul> -->
+ </li>
+ <li><strong><a href="http://mongodb.org/display/DOCS/Admin+Zone">Administrative Documentation</a></strong>
+   <ul>
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Components">Components</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Journaling">Journaling</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Production+Notes">Production Notes</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Replication">Replication</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Sharding">Sharding</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Monitoring+and+Diagnostics">Monitoring and Diagnostics</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Backups">Backups</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Durability+and+Repair">Durability and Repair</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Security+and+Authentication">Security and Authentication</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Starting+and+Stopping+Mongo">Starting/Stopping MongoDB</a></li> -->
+     <!-- <li><a href="http://mongodb.org/display/DOCS/GridFS+Tools">GridFS Tools</a></li> -->
+     <li><a href="http://mongodb.org/display/DOCS/DBA+Operations+from+the+Shell">DB Operations from the Shell</a></li>
+     <!-- <li><a href="http://mongodb.org/display/DOCS/Architecture+and+Components">Architecture and Components</a></li> -->
+     <li><a href="http://mongodb.org/display/DOCS/Windows">Windows</a></li>
+     <li><a href="http://mongodb.org/display/DOCS/Troubleshooting">Troubleshooting</a></li>
+   </ul>
+ </li>
+ <li><strong><a href="http://www.mongodb.org/display/DOCS/Community">Community and Ecosystem</a></strong>
+   <ul>
+     <li><a href="http://10gen.com">10gen</a></li>
+     <li><a href="http://www.mongodb.org/events">MongoDB Events</a></li>
+     <li><a href="http://planet.mongodb.org">Planet MongoDB</a></li>
+     <li><a href="http://mongodb.org/display/DOCS/MongoDB+Masters">MongoDB Masters</a></li>
+     <li><a href="http://mongodb.org/display/DOCS/Slides+and+Video">Slides and Video</a></li>
+     <!-- <li><a href="http://cookbook.mongodb.org/">Cookbook</a></li> -->
+     <li><a href="http://mongodb.org/display/DOCS/Hosting+Center">Hosting Center</a></li>
+     <li><a href="http://mms.10gen.com/">MongoDB Monitoring Service</a> (<a href="http://mms.10gen.com/help/">docs</a>)</li>
+     <li><a href="http://mongodb.org/display/DOCS/Admin+UIs">Administrative Interfaces</a></li>
+     <!-- <li><a href="http://mongodb.org/display/DOCS/International+Docs">International Documentation</a></li> -->
+     <li><a href="http://10gen.com/books/">MongoDB Books</a></li>
+   </ul>
+ </li>
+ <li><strong><a href="http://www.mongodb.org/display/DOCS/Drivers">Drivers</a></strong>
+   <ul>
+     <li>JavaScript (<a href="http://mongodb.org/display/DOCS/Javascript+Language+Center">wiki</a>, <a href="http://api.mongodb.org/js/current">docs</a>)</li>
+     <li>Python (<a href="http://mongodb.org/display/DOCS/Python+Language+Center">wiki</a>, <a href="http://api.mongodb.org/python/current">docs</a>)</li>
+     <li>Ruby (<a href="http://mongodb.org/display/DOCS/Ruby+Language+Center">wiki</a>, <a href="http://api.mongodb.org/ruby/current">docs</a>)</li>
+     <li>PHP (<a href="http://mongodb.org/display/DOCS/PHP+Language+Center">wiki</a>, <a href="http://php.net/mongo/">docs</a>)</li>
+     <li>Perl (<a href="http://mongodb.org/display/DOCS/Perl+Language+Center">wiki</a>, <a href="http://api.mongodb.org/perl/current/">docs</a>)</li>
+     <li>Java (<a href="http://mongodb.org/display/DOCS/Java+Language+Center">wiki</a>, <a href="http://api.mongodb.org/java/current">docs</a>)</li>
+     <li>Scala (<a href="http://mongodb.org/display/DOCS/Scala+Language+Center">wiki</a>, <a href="http://api.mongodb.org/scala/casbah/current/">docs</a>)</li>
+     <li>C# (<a href="http://mongodb.org/display/DOCS/CSharp+Language+Center">wiki</a>, <a href="http://api.mongodb.org/csharp/current/">docs</a>)</li>
+     <li>C (<a href="http://mongodb.org/display/DOCS/C+Language+Center">wiki</a>, <a href="http://api.mongodb.org/c/current/">docs</a>)</li>
+     <li>C++ (<a href="http://mongodb.org/pages/viewpage.action?pageId=133409">wiki</a>, <a href="http://api.mongodb.org/cplusplus/current/">docs</a>)</li>
+     <li>Haskell (<a href="http://mongodb.org/display/DOCS/Haskell+Language+Center">wiki</a>, <a href="http://api.mongodb.org/haskell">docs</a>)</li>
+     <li>Erlang (<a href="http://mongodb.org/display/DOCS/Erlang+Language+Center">wiki</a>, <a href="http://api.mongodb.org/erlang">docs</a>)</li>
+   </ul>
+ </li>
+</ul>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  <div class="footer">
+        &copy; Copyright 2011-2012, 10gen, Inc.  Licensed under <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons</a>.
+
+    <p>MongoDB&reg;, Mongo&reg;, and the leaf logo are registered trademarks of 10gen, Inc.</p>
+    <p>The MongoDB Documentation Project uses <a href="https://github.com/mongodb/docs">GitHub</a>. Fork the repository and submit pull requests to contribute.</p>
+    <p>If you find any issues with the documentation feel free to open a <a href="http://jira.mongodb.org/browse/DOCS">Jira Case</a> and we'll work to resolve it promptly.</p>
+
+  </div><script type="text/javascript">
+var _gaq = _gaq || [];
+var pluginUrl = (('https:' == document.location.protocol) ? 'https://ssl.' : 'http://www.') + 'google-analytics.com/plugins/ga/inpage_linkid.js';
+_gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+_gaq.push(['_setAccount', 'UA-7301842-8']);
+_gaq.push(['_setDomainName', 'docs.mongodb.org']);
+_gaq.push(['_trackPageview']);
+(function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ga, s);
+        })();
+</script>
+
+<script type="text/javascript">
+document.write(unescape("%3Cscript src='" + document.location.protocol + "//munchkin.marketo.net/munchkin.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script>try { mktoMunchkin("017-HGS-593"); } catch(e) {}</script>
+  </body>
+</html>
